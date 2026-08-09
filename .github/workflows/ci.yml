@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --upgrade pip && python -m pip install -e '.[dev]'
+      - run: python -m playwright install --with-deps chromium
+      - run: python -m alembic upgrade head && python -m alembic check
+      - run: python scripts/run_test_suite.py
+      - run: python evals/stage5/run.py && python scripts/run_performance_baseline.py
+      - run: python scripts/run_e2e.py
+      - run: docker build -t zhilin-community-agent-api .
+      # Pinned safe commit after the March 2026 Trivy supply-chain incident.
+      - uses: aquasecurity/setup-trivy@81e514348e19b6112ce2a7e3ecbafe19c1e1f567 # v0.3.1
+        with:
+          version: v0.72.0
+          cache: true
+      - run: python scripts/run_security_scan.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage5-reports
+          path: artifacts/

@@ -1,0 +1,4 @@
+external_source,external_category,internal_category,internal_subcategory,risk_default,included,mapping_note
+nyc_311,Electrical,公共照明,照明故障,medium,yes,仅概念映射
+nyc_311,Water,给排水,漏水,medium,yes,仅概念映射
+

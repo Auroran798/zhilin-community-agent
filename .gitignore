@@ -1,0 +1,36 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+*.db
+*.sqlite
+*.sqlite3
+data/vector_store/
+data/uploads/
+uploads/
+logs/
+.pytest_cache/
+.coverage
+htmlcov/
+artifacts/
+.venv*/
+tmp_*/
+*.egg-info/
+.DS_Store
+Thumbs.db
+data/knowledge/chroma/
+data/knowledge/files/
+data/*.db
+tmp/
+tmp_*/
+# Public-real data is reproducible from manifests but may be large. Never commit
+# raw, processed or complete normalized records; only schemas, samples and manifests belong in source control.
+data/public_real/raw/*
+!data/public_real/raw/README.md
+data/public_real/processed/*
+!data/public_real/processed/README.md
+data/public_real/normalized/*
+!data/public_real/normalized/README.md

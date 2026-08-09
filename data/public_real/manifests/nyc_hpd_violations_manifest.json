@@ -1,0 +1,29 @@
+{
+  "dataset_name": "Housing Maintenance Code Violations",
+  "dataset_id": "wvxf-dwi5",
+  "source_url": "https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5",
+  "api_url": "https://data.cityofnewyork.us/resource/wvxf-dwi5.json",
+  "publisher": "NYC Department of Housing Preservation and Development (HPD)",
+  "country": "US",
+  "retrieved_at": "2026-08-07T14:02:36.360172+00:00",
+  "license": "NYC Open Data terms: public datasets available without registration, license requirement, or usage restrictions; NYC.gov terms also apply",
+  "license_url": "https://opendata.cityofnewyork.us/overview/",
+  "original_format": "JSON from official Socrata SODA API",
+  "file_name": "nyc_hpd_violations.jsonl",
+  "file_size": 6835203,
+  "sha256": "358944a2d216684b92e522b03b88a71eb931f6d3786bd4fe6cf4a75a8ad42229",
+  "row_count": 10000,
+  "column_count": 15,
+  "encoding": "UTF-8 JSONL",
+  "download_method": "official SODA API, deterministic random-offset sampling across published row range, no credentials",
+  "page_size": 5000,
+  "resume": true,
+  "download_outcome": {
+    "existing_rows": 0,
+    "downloaded_rows": 10000,
+    "total_rows": 10000,
+    "sample_pages": 3,
+    "sampling_method": "deterministic_random_offset"
+  },
+  "privacy_minimization": "The API select list excludes street address, house number, apartment, latitude and longitude."
+}

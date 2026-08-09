@@ -1,0 +1,3 @@
+# Stage 5 voiceover
+
+“智邻管家 is a single-machine demonstration for community-property workflows. A resident can describe a repair in natural language; the agent extracts information and requires confirmation before any write. Safety-critical messages are escalated to people. Policy answers show their sources, while unsupported questions are refused. Staff and maintenance actions remain protected by backend role and ownership checks. Announcements and major rectification closures retain human approval gates. The management view exposes dashboard, audit and trace evidence. This Demo intentionally does not integrate real payments, access control or personal production data.”

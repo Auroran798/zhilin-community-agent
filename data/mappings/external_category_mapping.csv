@@ -1,0 +1,21 @@
+source_dataset,external_category,external_subcategory,normalized_category,normalized_subcategory,default_risk,mapping_method,mapping_confidence,mapping_version,reviewed,notes
+ygpa-z7cr,ELEVATOR,,电梯,elevator,high,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,PLUMBING,,给排水,plumbing,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,WATER LEAK,,给排水,water_leak,high,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,HEATING,,给排水,heating,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,HEAT/HOT WATER,,给排水,hot_water,high,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,ELECTRIC,,配电设施,electrical,high,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,DOOR/WINDOW,,门禁,door_window,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,UNSANITARY CONDITION,,公共区域卫生,sanitation,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,FLOORING/STAIRS,,道路和地面,floor_stairs,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,SAFETY,,消防设施,safety,high,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,OUTSIDE BUILDING,,公共区域卫生,outside,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,GENERAL,,其他,general,low,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,PAINT/PLASTER,,其他,finish,low,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,NONCONST,,其他,non_construction,low,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,APPLIANCE,,其他,appliance,low,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+ygpa-z7cr,CONSTRUCTION,,其他,construction,medium,exact_major_category,1.00,stage6-v1,yes,NYC HPD major category
+wvxf-dwi5,A,description keyword applies when available,其他,unmapped,low,fallback,0.45,stage6-v1,yes,Class is a risk signal; description keyword rules override category when a rule matches.
+wvxf-dwi5,B,description keyword applies when available,其他,unmapped,medium,fallback,0.45,stage6-v1,yes,Class is a risk signal; description keyword rules override category when a rule matches.
+wvxf-dwi5,C,description keyword applies when available,其他,unmapped,high,fallback,0.45,stage6-v1,yes,Class is a risk signal; description keyword rules override category when a rule matches.
+wvxf-dwi5,I,description keyword applies when available,其他,unmapped,low,fallback,0.45,stage6-v1,yes,Class is a risk signal; description keyword rules override category when a rule matches.

@@ -1,0 +1,29 @@
+{
+  "dataset_name": "Housing Maintenance Code Complaints and Problems",
+  "dataset_id": "ygpa-z7cr",
+  "source_url": "https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Complaints-and-Problems/ygpa-z7cr",
+  "api_url": "https://data.cityofnewyork.us/resource/ygpa-z7cr.json",
+  "publisher": "NYC Department of Housing Preservation and Development (HPD)",
+  "country": "US",
+  "retrieved_at": "2026-08-07T14:01:56.439485+00:00",
+  "license": "NYC Open Data terms: public datasets available without registration, license requirement, or usage restrictions; NYC.gov terms also apply",
+  "license_url": "https://opendata.cityofnewyork.us/overview/",
+  "original_format": "JSON from official Socrata SODA API",
+  "file_name": "nyc_hpd_complaints.jsonl",
+  "file_size": 42484080,
+  "sha256": "bd57e63e54c847a45e39c333485ccf0ac71de2b5ed5e83df5e521c30748803ec",
+  "row_count": 50000,
+  "column_count": 20,
+  "encoding": "UTF-8 JSONL",
+  "download_method": "official SODA API, deterministic random-offset sampling across published row range, no credentials",
+  "page_size": 5000,
+  "resume": true,
+  "download_outcome": {
+    "existing_rows": 0,
+    "downloaded_rows": 50000,
+    "total_rows": 50000,
+    "sample_pages": 10,
+    "sampling_method": "deterministic_random_offset"
+  },
+  "privacy_minimization": "The API select list excludes street address, house number, apartment, latitude and longitude."
+}

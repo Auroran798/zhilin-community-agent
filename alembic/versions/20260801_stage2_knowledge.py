@@ -1,0 +1,23 @@
+"""Stage 2 immutable knowledge-base baseline."""
+from alembic import op
+import sqlalchemy as sa
+
+revision="20260801_stage2_knowledge"
+down_revision="20260801_initial"
+branch_labels=None
+depends_on=None
+
+
+def upgrade():
+    op.create_table("knowledge_documents",sa.Column("id",sa.String(36),primary_key=True),sa.Column("document_no",sa.String(40),nullable=False),sa.Column("title",sa.String(255),nullable=False),sa.Column("document_type",sa.String(64),nullable=False),sa.Column("source_type",sa.String(64),nullable=False),sa.Column("source_url",sa.String(500)),sa.Column("publisher",sa.String(255)),sa.Column("applicable_community",sa.String(100)),sa.Column("version",sa.String(64),nullable=False),sa.Column("effective_date",sa.DateTime()),sa.Column("expiry_date",sa.DateTime()),sa.Column("status",sa.String(32),nullable=False),sa.Column("file_name",sa.String(255),nullable=False),sa.Column("file_type",sa.String(20),nullable=False),sa.Column("file_size",sa.Integer(),nullable=False),sa.Column("file_hash",sa.String(64),nullable=False),sa.Column("storage_path",sa.String(500),nullable=False),sa.Column("content_hash",sa.String(64)),sa.Column("raw_text",sa.Text()),sa.Column("cleaned_text",sa.Text()),sa.Column("created_by",sa.String(36),sa.ForeignKey("users.id"),nullable=False),sa.Column("reviewed_by",sa.String(36),sa.ForeignKey("users.id")),sa.Column("created_at",sa.DateTime(),nullable=False),sa.Column("updated_at",sa.DateTime(),nullable=False),sa.Column("indexed_at",sa.DateTime()))
+    op.create_index("ix_knowledge_documents_document_no","knowledge_documents",["document_no"],unique=True);op.create_index("ix_knowledge_documents_file_hash","knowledge_documents",["file_hash"],unique=True)
+    for column in ("title","document_type","applicable_community","status","content_hash"):op.create_index(f"ix_knowledge_documents_{column}","knowledge_documents",[column])
+    op.create_table("knowledge_sections",sa.Column("id",sa.String(36),primary_key=True),sa.Column("document_id",sa.String(36),sa.ForeignKey("knowledge_documents.id"),nullable=False),sa.Column("section_no",sa.String(64),nullable=False),sa.Column("heading",sa.String(255)),sa.Column("clause_number",sa.String(64)),sa.Column("page_start",sa.Integer()),sa.Column("page_end",sa.Integer()),sa.Column("order_index",sa.Integer(),nullable=False),sa.Column("text",sa.Text(),nullable=False),sa.Column("created_at",sa.DateTime(),nullable=False));op.create_index("ix_knowledge_sections_document_id","knowledge_sections",["document_id"])
+    op.create_table("knowledge_chunks",sa.Column("id",sa.String(36),primary_key=True),sa.Column("chunk_uid",sa.String(128),nullable=False),sa.Column("document_id",sa.String(36),sa.ForeignKey("knowledge_documents.id"),nullable=False),sa.Column("section_id",sa.String(36),sa.ForeignKey("knowledge_sections.id")),sa.Column("chunk_index",sa.Integer(),nullable=False),sa.Column("text",sa.Text(),nullable=False),sa.Column("token_count",sa.Integer(),nullable=False),sa.Column("heading_path",sa.String(500)),sa.Column("clause_number",sa.String(64)),sa.Column("vector_collection",sa.String(100)),sa.Column("vector_id",sa.String(128)),sa.Column("embedding_model",sa.String(100)),sa.Column("content_hash",sa.String(64),nullable=False),sa.Column("metadata_json",sa.Text()),sa.Column("created_at",sa.DateTime(),nullable=False),sa.UniqueConstraint("document_id","chunk_index",name="uq_knowledge_chunk_document_index"))
+    op.create_index("ix_knowledge_chunks_chunk_uid","knowledge_chunks",["chunk_uid"],unique=True)
+    for column in ("document_id","content_hash"):op.create_index(f"ix_knowledge_chunks_{column}","knowledge_chunks",[column])
+    op.create_table("rag_query_logs",sa.Column("id",sa.String(36),primary_key=True),sa.Column("request_id",sa.String(64),nullable=False),sa.Column("user_id",sa.String(36),sa.ForeignKey("users.id"),nullable=False),sa.Column("user_role",sa.String(32),nullable=False),sa.Column("community_id",sa.String(100)),sa.Column("query",sa.Text(),nullable=False),sa.Column("retrieval_mode",sa.String(32),nullable=False),sa.Column("top_k",sa.Integer(),nullable=False),sa.Column("retrieved_chunk_ids",sa.Text()),sa.Column("answer_status",sa.String(32),nullable=False),sa.Column("citation_count",sa.Integer(),nullable=False),sa.Column("latency_ms",sa.Integer(),nullable=False),sa.Column("created_at",sa.DateTime(),nullable=False));op.create_index("ix_rag_query_logs_request_id","rag_query_logs",["request_id"]);op.create_index("ix_rag_query_logs_user_id","rag_query_logs",["user_id"])
+
+
+def downgrade():
+    for table in ("rag_query_logs","knowledge_chunks","knowledge_sections","knowledge_documents"):op.drop_table(table)

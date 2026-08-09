@@ -1,0 +1,3 @@
+# Future roadmap
+
+First resolve any release-gate NOT_RUN status and expand browser coverage to the complete role journeys. The Stage 6 codebase now includes a disabled-by-default, audited read-only adapter contract and controlled synthetic adapter; complete partner authorization, data protection review, vendor field mapping and real-data re-evaluation before enabling any real adapter. Move to PostgreSQL/Redis/object storage only when multi-user load, retention and operational ownership demand it. Add multi-community isolation before multi-tenant use. Consider A2A only after the single-agent workflow has stable error budgets and independent safety evaluations.

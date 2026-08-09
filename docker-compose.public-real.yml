@@ -1,0 +1,53 @@
+name: zhilin-community-agent-public-real
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-zhilin}
+      POSTGRES_USER: ${POSTGRES_USER:-zhilin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-zhilin-local-dev-only}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes: [postgres_public_real:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-zhilin}:${POSTGRES_PASSWORD:-zhilin-local-dev-only}@postgres:5432/${POSTGRES_DB:-zhilin}
+      DATA_MODE: public_real
+    command: sh -c "alembic upgrade head && python3 -m data.seed && python3 -m scripts.stage6_pipeline import && uvicorn api.main:app --host 0.0.0.0 --port 8000"
+    volumes: [./data:/app/data]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  worker:
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-zhilin}:${POSTGRES_PASSWORD:-zhilin-local-dev-only}@postgres:5432/${POSTGRES_DB:-zhilin}
+      DATA_MODE: public_real
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  mcp:
+    build:
+      context: .
+      args:
+        PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:-python:3.12-slim}
+    command: python3 -m mcp_server.server
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-zhilin}:${POSTGRES_PASSWORD:-zhilin-local-dev-only}@postgres:5432/${POSTGRES_DB:-zhilin}
+      DATA_MODE: public_real
+      MCP_TRANSPORT: stdio
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: [mcp]
+
+volumes:
+  postgres_public_real:

@@ -1,0 +1,32 @@
+{
+  "work_orders": [
+    {
+      "external_id": "DEMO-EXT-1001",
+      "source_system": "demo_property_system",
+      "property_reference": "DEMO-GARDEN-1-1-101",
+      "status": "处理中",
+      "category": "给排水",
+      "priority": "P2",
+      "summary": "公共管井渗水待处理",
+      "location_description": "1号楼1单元公共管井",
+      "risk_level": "medium",
+      "created_at": "2026-08-06T08:30:00",
+      "updated_at": "2026-08-06T10:15:00",
+      "mapping_warnings": []
+    },
+    {
+      "external_id": "DEMO-EXT-1002",
+      "source_system": "demo_property_system",
+      "property_reference": "DEMO-GARDEN-2-2-603",
+      "status": "待受理",
+      "category": "公共照明",
+      "priority": "P3",
+      "summary": "地下车库照明故障",
+      "location_description": "地下车库B区",
+      "risk_level": "low",
+      "created_at": "2026-08-07T09:00:00",
+      "updated_at": "2026-08-07T09:00:00",
+      "mapping_warnings": ["仅为受控演示数据，不可据此推断真实物业状态"]
+    }
+  ]
+}
