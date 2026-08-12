@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-NZ-001",
+  "source_url": "https://www.tenancy.govt.nz/maintenance-and-inspections/damage-and-repairs/",
+  "local_path": "official/international/nz_damage_and_repairs.html",
+  "acquired_at": "2026-08-10T04:45:38.958018+00:00",
+  "byte_size": 112642,
+  "sha256": "df1838f2624c3e6b2bf0409da207c825c28c77d6cc36c2d9eb214c1893d1c81a",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

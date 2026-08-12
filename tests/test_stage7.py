@@ -8,11 +8,11 @@ from sqlalchemy.orm import sessionmaker
 
 import api.main as main
 from api.database import Base, get_db
-from api.models import (Bill, BillItem, Binding, Equipment, InspectionPlan,
+from api.models import (Bill, BillItem, Binding, Equipment,
                         MaintenanceProfile, MaintenanceProfileSkill,
                         MaintenanceSkill, Notification, Property, SLAPolicy,
-                        User, WorkOrder)
-from api.security import create_token, hash_password
+                        User)
+from api.security import hash_password
 from api.time import utc_now
 from harness.service import ExecutionContext, get_harness
 

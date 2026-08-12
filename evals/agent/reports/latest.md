@@ -2,29 +2,31 @@
 
 ```json
 {
+  "evaluation_type": "offline_agent_regression",
+  "dataset_status": "regression_not_independently_reviewed_gold",
   "case_count": 95,
+  "beijing_controlled_case_count": 360,
   "metrics": {
     "intent_accuracy": 1.0,
-    "intent_macro_f1": 1.0,
-    "slot_extraction_accuracy": 1.0,
-    "required_slot_completeness": 1.0,
-    "follow_up_precision": 1.0,
     "tool_selection_accuracy": 1.0,
-    "tool_call_success_rate": 1.0,
-    "confirmation_gate_accuracy": 1.0,
-    "idempotency_success_rate": 1.0,
-    "risk_detection_recall": 1.0,
-    "risk_detection_precision": 1.0,
-    "human_review_routing_accuracy": 1.0,
-    "rag_answer_status_accuracy": 1.0,
-    "citation_compliance_rate": 1.0,
-    "permission_isolation_rate": 1.0,
-    "regression_pass_rate": 1.0
+    "risk_detection_accuracy": 1.0,
+    "beijing_policy_regression_pass_rate": 1.0,
+    "jurisdiction_leakage_count": 0
+  },
+  "not_measured": {
+    "slot_extraction_accuracy": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "tool_call_success_rate": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "confirmation_gate_accuracy": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "idempotency_success_rate": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "permission_isolation_rate": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "rag_answer_status_accuracy": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC",
+    "citation_compliance_rate": "NOT_MEASURED: this offline classifier runner does not execute tools, writes, confirmations, or live RBAC"
   },
   "breakdown": {
     "intent_cases": 80,
     "risk_cases": 15,
     "tool_cases": 80
-  }
+  },
+  "failures": []
 }
 ```

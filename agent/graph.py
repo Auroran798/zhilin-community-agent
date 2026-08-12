@@ -5,7 +5,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.types import interrupt
 from langgraph.checkpoint.sqlite import SqliteSaver
 from api.config import settings
-from api.models import AgentStaffReview, Binding, Property, User
+from api.models import AgentStaffReview, User
 from api.services import audit
 from skills.registry import get_skill
 from .llm import provider
@@ -15,6 +15,7 @@ from .tools import execute, primary_property, preview, read_tool
 
 class AgentState(TypedDict,total=False):
     session_id:str; request_id:str; run_id:str; user_id:str; user_role:str; property_id:str|None; community:str|None
+    product_mode:str; jurisdiction:str|None
     current_input:str; normalized_input:str; intent:str; intent_confidence:float; active_skill:str|None; follow_up_rounds:int; continue_previous:bool
     extracted_fields:dict[str,Any]; missing_fields:list[str]; validation_errors:list[str]
     risk_level:str; risk_flags:list[str]; requires_manual_escalation:bool; manual_escalation_reason:str|None; staff_review_id:str|None
@@ -66,7 +67,9 @@ def build_graph(db):
         needed="、".join(labels.get(x,x) for x in s["missing_fields"][:2])
         return {"final_answer":f"为继续处理，请补充：{needed}。","response_status":"need_information","follow_up_rounds":rounds}
     def query_rag(s):
-        u=db.get(User,s["user_id"]);data=read_tool(db,u,s["intent"],s.get("extracted_fields",{}),s["normalized_input"],s.get("run_id"),s.get("session_id"));result=data["result"]
+        u=db.get(User,s["user_id"]);fields={**s.get("extracted_fields",{}),"product_mode":s.get("product_mode","domestic_beijing")}
+        if s.get("jurisdiction"): fields["jurisdiction"]=s["jurisdiction"]
+        data=read_tool(db,u,s["intent"],fields,s["normalized_input"],s.get("run_id"),s.get("session_id"));result=data["result"]
         if data["tool"]=="query_rag":return {"tool_name":"query_rag","tool_result":result,"rag_answer_status":result.get("answer_status"),"rag_answer":result.get("answer"),"rag_citations":result.get("citations",[]),"rag_warnings":result.get("warnings",[])}
         return {"tool_name":data["tool"],"tool_result":result,"rag_citations":result.get("citations",[]) if isinstance(result,dict) else []}
     def build_action_preview(s):

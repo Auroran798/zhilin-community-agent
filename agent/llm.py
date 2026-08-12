@@ -92,7 +92,8 @@ class OpenAICompatibleLLMProvider:
         last_error=None
         for _ in range(settings.agent_llm_max_retries+1):
             try:
-                raw=self.invoke(prompt); match=re.search(r"\{.*\}",raw,re.S)
+                raw=self.invoke(prompt)
+                match=re.search(r"\{.*\}",raw,re.S)
                 return schema.model_validate(json.loads(match.group(0) if match else raw))
             except (httpx.HTTPError, json.JSONDecodeError, ValidationError, AttributeError) as exc: last_error=exc
         raise RuntimeError("agent_llm_structured_output_invalid") from last_error

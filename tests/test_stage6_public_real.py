@@ -1,3 +1,4 @@
+# ruff: noqa: F811
 from datetime import datetime
 
 from api.config import settings
@@ -5,7 +6,7 @@ from api.database import get_db
 from api.main import app
 from api.models import PublicCase, PublicDataset, WorkOrder
 from harness.service import ExecutionContext, get_harness
-from test_isolated_integration import isolated_client
+from test_isolated_integration import isolated_client  # noqa: F401,F811
 
 
 def _login(client, username):

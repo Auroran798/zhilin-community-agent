@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-AU-VIC-001",
+  "source_url": "https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/repairs/repairs-in-rental-properties",
+  "local_path": "official/international/au_vic_rental_repairs.html",
+  "acquired_at": "2026-08-10T04:45:38.956250+00:00",
+  "byte_size": 75307,
+  "sha256": "cd7811dac18502cb01899824f848fd32d4caf86336f02f08db91087586f87dd0",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

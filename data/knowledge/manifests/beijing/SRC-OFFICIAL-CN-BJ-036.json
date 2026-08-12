@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-036",
+  "requested_url": "https://yjglj.beijing.gov.cn/art/2025/6/30/art_2522_687722.html",
+  "retrieved_at": "2026-08-10T12:53:43.511292+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://yjglj.beijing.gov.cn/art/2025/6/30/art_2522_687722.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "yjglj.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://yjglj.beijing.gov.cn/art/2025/6/30/art_2522_687722.html",
+  "final_host": "yjglj.beijing.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 135765,
+  "sha256": "ca73a49013d1a116dc84f75c0c63c8c87744c6bf595599775056b1fca4439e70",
+  "local_path": "official/china/beijing/src-official-cn-bj-036.html"
+}

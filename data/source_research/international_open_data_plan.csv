@@ -1,0 +1,9 @@
+source_id,name,country_or_scope,official_url,data_role,answerable,jurisdiction,license_or_terms,selection_status
+nyc-311,311 Service Requests from 2020 to Present,US-NYC,https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2020-to-Present/erm2-nwe9,service-request taxonomy and lifecycle,no,US-NY-NYC,NYC Open Data terms,candidate
+nyc-hpd-complaints,Housing Maintenance Code Complaints and Problems,US-NYC,https://catalog.data.gov/dataset/housing-maintenance-code-complaints-and-problems,maintenance complaints and status lifecycle,no,US-NY-NYC,public access / NYC Open Data terms,selected
+nyc-hpd-violations,Housing Maintenance Code Violations,US-NYC,https://catalog.data.gov/dataset/housing-maintenance-code-violations,inspection violation severity and rectification,no,US-NY-NYC,public access / NYC Open Data terms,selected
+sg-hdb-property,HDB Property Information,Singapore,https://data.gov.sg/datasets/d_17f5382f26140b1fdae0ba2ef6239d2f/view,property and building master data,no,SG,data.gov.sg Open Data Licence,candidate
+sg-hdb-building,HDB Existing Building GEOJSON,Singapore,https://data.gov.sg/datasets/d_16b157c52ed637edd6ba1232e026258d/view,building geometry and asset hierarchy,no,SG,data.gov.sg Open Data Licence,candidate
+uk-housing-ombudsman-code,Complaint Handling Code,United Kingdom,https://www.housing-ombudsman.org.uk/landlords-info/complaint-handling-code/the-code-2024/,complaint governance and escalation,yes,GB,official website terms,candidate
+us-hud-inspections,Multifamily Physical Inspection Scores,United States,https://www.hud.gov/stat/mfh/inspection-scores,inspection score and risk analytics,no,US,US federal public information,candidate
+open311-georeport-v2,Open311 GeoReport v2,International,https://wiki.open311.org/GeoReport_v2/,canonical service-request API schema,yes,GLOBAL,open specification,candidate

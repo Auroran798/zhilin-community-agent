@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 from api.database import Base, get_db
 from api.main import app
-from api.models import Binding, KnowledgeDocumentVersion, Property, RagFeedback, User
+from api.models import Binding, KnowledgeChunk, KnowledgeDocumentVersion, Property, RagFeedback, User
 from api.security import hash_password
 
 def test_rag_injection_block_and_feedback_ownership(tmp_path):
@@ -35,4 +35,5 @@ def test_rag_injection_block_and_feedback_ownership(tmp_path):
     update=client.post(f"/api/v1/knowledge/documents/{doc['id']}/versions",headers=manager_h,data={"version":"1.1","change_summary":"补充报修渠道"},files={"file":("rule-v11.md","# 报修\n居民可提交报修，也可联系服务中心。","text/markdown")})
     assert update.status_code==200 and update.json()["data"]["document"]["version"]=="1.1"
     assert db.query(KnowledgeDocumentVersion).filter_by(document_id=doc["id"]).count()==2
+    assert {value for (value,) in db.query(KnowledgeChunk.document_version).filter_by(document_id=doc["id"]).distinct()}=={"1.0","1.1"}
     app.dependency_overrides.clear();db.close()

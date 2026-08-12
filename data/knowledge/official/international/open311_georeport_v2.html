@@ -1,0 +1,1656 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>GeoReport v2</title>
+    
+    <meta name="author" content="">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap styles -->
+    <link href="/assets/themes/open311/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Swagger styles -->
+    <link href="/css/swagger.css" rel="stylesheet">   
+    
+    <!-- Custom styles -->
+    <link href="/assets/themes/open311/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+	
+    <!-- Custom fonts -->
+    <link href='//fonts.googleapis.com/css?family=Titillium+Web:400,400italic,600,600italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- atom & rss feed -->
+    <link href="" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/assets/themes/open311/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/themes/open311/js/jquery.toc.js"></script>
+    <script src="/assets/themes/open311/js/main.js"></script>
+
+  </head>
+
+  <body>
+
+    <header class="navbar navbar-static-top" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="//open311.org"><h1>Open311</h1></a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="//www.open311.org/blog/">Blog</a></li>
+            
+         
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/">Wiki</a></li>
+                <li><a href="/GeoReport_v2">GeoReport v2</a></li>
+              </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Discussion<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="//lists.open311.org/groups/discuss">Mailing List</a></li>
+                <li><a href="//github.com/open311/open311.github.io/issues">Issue Tracker</a></li>
+              </ul>
+            </li>
+
+            <li><a href="//www.open311.org/about">About</a></li>
+            <li><a href="//www.open311.org/contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div id="page-header">
+      <div class="container">
+        <h2 class="pull-left"><a href="/">Wiki</a></h2>
+
+        <div class="revision-buttons pull-right">
+          <a class="btn btn-default edit-button" href="//github.com/open311/open311.github.io/edit/master/GeoReport/v2/index.md">Edit this Page</a>
+          <a class="btn btn-default" href="//github.com/open311/open311.github.io/commits/master/GeoReport/v2/index.md">View Revision History</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="main">
+      <div class="container">
+        
+<div class="page-header">
+  <h1>GeoReport v2 </h1>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <p><span style="color:red">This spec has been frozen and finalized, but the documentation will continue to be updated for clarity. Join the <a href="http://lists.open311.org/groups/discuss">Mailing List</a> for updates.</span></p>
+
+<p>The GeoReport API v2 allows developers to build applications to both view and report issues which government entities like cities are responsible for addressing. These interactions are often referred to as “service requests” or “calls for service” and have traditionally been handled by custom web forms or phone based call centers (sometimes using the 311 phone number or other short-code). The GeoReport API is designed to allow both government and third party developers to create new applications and technologies that can integrate directly with these same official contact centers in any government that supports the standard. The current specification is focused on location-based non-emergency issues such as graffiti, potholes, and street cleaning.</p>
+
+<p>The API consists of two main kinds of resources: <strong>services</strong> and service <strong>requests</strong>, but some servers that can’t generate a realtime service request may also rely on a <strong>token</strong> resource. In total there are six methods used to interact with these resources: GET services, GET a service definition (a specific service_code id), POST a request, GET requests, GET a request (a specific service_request_id). The documentation below (starting from the API Methods section) is ordered based on a common sequence of interactions where a person first sees a list of available service types, selects one and creates a new service request, and then is able to track the status of that request and other requests. However each method can be accessed independently and some applications may only be focused on querying existing service requests to do analytics.</p>
+
+<h2 id="status">Status</h2>
+
+<h3 id="specification">Specification</h3>
+
+<p><span style="color:orange;font-weight:bold">Stable:</span> The GeoReport v2 Spec has been finalized, but we are still updating documentation for clarity and verifying compliance of implementations</p>
+
+<h3 id="servers">Servers</h3>
+
+<p>Servers receive and manage service requests on behalf of a jurisdiction. <strong>A comprehensive list is being maintained on the <a href="/GeoReport_v2/Servers" title="wikilink">GeoReport v2 Servers</a> page</strong></p>
+
+<h2 id="apps--resources">Apps &amp; Resources</h2>
+
+<ul>
+  <li>See the <a href="/GeoReport_v2/Resources" title="wikilink">GeoReport v2 Developer Resources</a> page for code libraries and open source applications.</li>
+  <li>See the <a href="/GeoReport_v2/Support" title="wikilink">GeoReport v2 Support</a> page for applications, products, and services that support the spec.</li>
+</ul>
+
+<h2 id="service-discovery">Service Discovery</h2>
+
+<p>GeoReport v2 and subsequent Open311 APIs are also required to have a standard service discovery file associated with them to provide routing between versions and types of APIs. See the <a href="/Service_Discovery" title="wikilink">Service Discovery</a> page for details of the specification.</p>
+
+<h2 id="internationalization-and-encoding">Internationalization and Encoding</h2>
+
+<h3 id="datetime-format">Date/time format</h3>
+
+<p>All date/time fields must be formatted in a common subset of ISO 8601 as per the <a href="http://www.w3.org/TR/NOTE-datetime">w3 note</a>. Timezone information (either Z meaning UTC, or an HH:MM offset from UTC) <strong>must</strong> be included.</p>
+
+<p>Examples:</p>
+
+<ul>
+  <li>1994-11-05T08:15:30-05:00 corresponds to November 5, 1994, 8:15:30 am, US Eastern Standard Time.</li>
+  <li>1994-11-05T13:15:30Z corresponds to the same instant.</li>
+</ul>
+
+<h3 id="encoding">Encoding</h3>
+
+<p>UTF-8 is required everywhere.</p>
+
+<p>All text returned by the service, whether in XML, JSON, or any other text-based content-type, MUST be encoded as UTF-8. Appropriate HTTP headers must be set, and the root element must be preceded with the XML declaration including the encoding=”UTF-8” attribute. All text received by the service from the client will be assumed to be UTF-8 and must be decoded accordingly. Examples of the HTTP content-type headers for each format are shown below under Format Support.</p>
+
+<h2 id="format-support">Format Support</h2>
+
+<p>XML is a required format, but JSON can be provided at the discretion of the API provider. The output formats supported by the provider are indicated through the <a href="/Service_Discovery" title="wikilink">Service Discovery</a> formats field for the API endpoint being used. The client can specify the desired format by appending the format name to the resource. For example a GET request to /services.xml for text/xml output from the services resource and /services/01.json for application/json (<a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>) output for a specific service definition.</p>
+
+<p>The HTTP content-type headers should look like this for each format:</p>
+
+<p><strong>POST Service Request:</strong> Content-Type: application/x-www-form-urlencoded; charset=utf-8</p>
+
+<p><strong>XML:</strong> Content-Type: text/xml; charset=utf-8</p>
+
+<p><strong>JSON:</strong> Content-Type: application/json; charset=utf-8</p>
+
+<h3 id="xml-support">XML Support</h3>
+
+<p>XML for the API should be Content-Type: text/xml. The XML output currently defined is schemaless and without a namespace declaration. For now, extending the output with additional namespaces should be done at your own risk. To guarantee that all clients can support the XML output, it is recommended that you adhere to the specification strictly and do not include foreign tags or namespaces. It is also assumed that the default namespace is not specified, but if it must be specified, the XMLNS URI is the URL of the specification: <a href="http://wiki.open311.org/GeoReport_v2">http://wiki.open311.org/GeoReport_v2</a></p>
+
+<h3 id="json-support">JSON Support</h3>
+
+<p>JSON for the API should be Content-Type: application/json. JSON support is based on a programmatic mapping of the XML format using the <a href="http://wiki.open311.org/JSON_and_XML_Conversion#The_Spark_Convention">Spark Convention</a>. This means that if you have an XML file, you can easily generate the JSON version with XSL. This can be done using a server side XSLT (<a href="http://sandbox.georeport.org/tools/sparkjson/xml2json_spark_php.txt">php example</a>).</p>
+
+<h2 id="definitions">Definitions</h2>
+
+<h4 id="jurisdiction_id">jurisdiction_id</h4>
+
+<p>As a means to allow this API to distinguish multiple jurisdictions within one API endpoint we’ve included a “jurisdiction_id” which will be the unique identifier for cities. It has been suggested that we use the jurisdiction’s main website root url (without the www) as the “jurisdiction_id”. For San Francisco, the jurisdiction_id is sfgov.org. Implementations can ignore this parameter and treat it as an “Optional Argument” if the implementation only serves one jurisdiction.</p>
+
+<h4 id="optional-arguments">Optional Arguments</h4>
+
+<p>“Optional” means that the response should be the same whether a parameter is passed and is empty or is not passed at all. A null parameter should be treated as equivalent to a non-declared parameter in processing the request.</p>
+
+<h2 id="api-methods">API methods</h2>
+
+<h3 id="get-service-list">GET Service List</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Purpose</td>
+      <td>provide a list of acceptable 311 service request types and their associated service codes. These request types can be unique to the city/jurisdiction.</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>https://[API endpoint]/services.[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/services.xml?jurisdiction_id=city.gov</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">services</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td>The unique identifier for the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_name</code></td>
+      <td>The human readable name of the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>A brief description of the service request type.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">metadata</code></td>
+      <td>Determines whether there are additional form fields for this service type. <br /><br />  <code class="language-plaintext highlighter-rouge">true</code>: This service request type requires additional metadata so the client will need to make a call to the <a href="/#GET_Service_Definition" title="wikilink">Service Definition</a> method. <br /><br />  <code class="language-plaintext highlighter-rouge">false</code>: No additional information is required and a call to the <a href="/#GET_Service_Definition" title="wikilink">Service Definition</a> method is not needed.</td>
+      <td>Possible values: <code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type</code></td>
+      <td><code class="language-plaintext highlighter-rouge">realtime</code>: The service request ID will be returned immediately after the service request is submitted. <br /><br /> <code class="language-plaintext highlighter-rouge">batch</code>: A token will be returned immediately after the service request is submitted. This token can then be later used to return the service request ID. <br /><br /> <code class="language-plaintext highlighter-rouge">blackbox</code>: No service request ID will be returned after the service request is submitted</td>
+      <td>Possible values: <code class="language-plaintext highlighter-rouge">realtime</code>, <code class="language-plaintext highlighter-rouge">batch</code>, <code class="language-plaintext highlighter-rouge">blackbox</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">keywords</code></td>
+      <td>A comma separated list of tags or keywords to help users identify the request type. This can provide synonyms of the service_name and group.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">group</code></td>
+      <td>A category to group this service type within. This provides a way to group several service request types under one category such as “sanitation”</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="possible-errors">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - jurisdiction_id provided was not found (specify in error response)</li>
+  <li>400 - jurisdiction_id was not provided (specify in error response)</li>
+  <li>400 - General service error (Anything that fails during service list processing. The client will need to notify us)</li>
+</ul>
+
+<h4 id="example-response">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-service-list" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-service-list" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-service-list"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;services&gt;
+    &lt;service&gt;
+        &lt;service_code&gt;001&lt;/service_code&gt;
+        &lt;service_name&gt;Cans left out 24x7&lt;/service_name&gt;
+        &lt;description&gt;Garbage or recycling cans that have been left out for more than 24 hours after collection. Violators will be cited.&lt;/description&gt;
+        &lt;metadata&gt;true&lt;/metadata&gt;
+        &lt;type&gt;realtime&lt;/type&gt;
+        &lt;keywords&gt;lorem, ipsum, dolor&lt;/keywords&gt;
+        &lt;group&gt;sanitation&lt;/group&gt;
+    &lt;/service&gt;
+    &lt;service&gt;
+        &lt;service_code&gt;002&lt;/service_code&gt;
+        &lt;metadata&gt;true&lt;/metadata&gt;
+        &lt;type&gt;realtime&lt;/type&gt;
+        &lt;keywords&gt;lorem, ipsum, dolor&lt;/keywords&gt;
+        &lt;group&gt;street&lt;/group&gt;
+        &lt;service_name&gt;Construction plate shifted&lt;/service_name&gt;
+        &lt;description&gt;Metal construction plate covering the street or sidewalk has been moved.&lt;/description&gt;
+    &lt;/service&gt;
+    &lt;service&gt;
+        &lt;service_code&gt;003&lt;/service_code&gt;
+        &lt;metadata&gt;true&lt;/metadata&gt;
+        &lt;type&gt;realtime&lt;/type&gt;
+        &lt;keywords&gt;lorem, ipsum, dolor&lt;/keywords&gt;
+        &lt;group&gt;street&lt;/group&gt;
+        &lt;service_name&gt;Curb or curb ramp defect&lt;/service_name&gt;
+        &lt;description&gt;Sidewalk curb or ramp has problems such as cracking, missing pieces, holes, and/or chipped curb.&lt;/description&gt;
+    &lt;/service&gt;
+&lt;/services&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-service-list"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "service_code":001,
+    "service_name":"Cans left out 24x7",
+    "description":"Garbage or recycling cans that have been left out for more than 24 hours after collection. Violators will be cited.",
+    "metadata":true,
+    "type":"realtime",
+    "keywords":"lorem, ipsum, dolor",
+    "group":"sanitation"
+  },
+  {
+    "service_code":002,
+    "metadata":true,
+    "type":"realtime",
+    "keywords":"lorem, ipsum, dolor",
+    "group":"street",
+    "service_name":"Construction plate shifted",
+    "description":"Metal construction plate covering the street or sidewalk has been moved."
+  },
+  {
+    "service_code":003,
+    "metadata":true,
+    "type":"realtime",
+    "keywords":"lorem, ipsum, dolor",
+    "group":"street",
+    "service_name":"Curb or curb ramp defect",
+    "description":"Sidewalk curb or ramp has problems such as cracking, missing pieces, holes, and/or chipped curb."
+  }
+]
+</code></pre></div>  </div>
+
+</div>
+
+<h3 id="get-service-definition">GET Service Definition</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Conditional</td>
+      <td>Yes - <span style="font-weight : bold; color: red">This call is only necessary if the Service selected has metadata set as <em>true</em> from the <em>GET Services</em> response</span></td>
+    </tr>
+    <tr>
+      <td>Purpose</td>
+      <td>Define attributes associated with a service code. These attributes can be unique to the city/jurisdiction.</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>https://[API endpoint]/services/[service_code].[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/services/033.xml?jurisdiction_id=city.gov</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments-1">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+    <tr>
+      <td><code class="field-url">service_code</code></td>
+      <td> </td>
+      <td>The service_code is specified in the main URL path rather than an added query string parameter.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-1">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_definition</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td>Returns the service_code associated with the definition, the same one submitted for this call.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">attributes</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">attribute</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">variable</code></td>
+      <td><code class="language-plaintext highlighter-rouge">true</code> denotes that user input is needed <br /><br /> <code class="language-plaintext highlighter-rouge">false</code> means the attribute is only used to present information to the user within the description field</td>
+      <td>Possible values: <code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">code</code></td>
+      <td>A unique identifier for the attribute</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datatype</code></td>
+      <td>Denotes the type of field used for user input. <br /> <br /> <code class="language-plaintext highlighter-rouge">string</code>: A string of characters without line breaks. Represented in an HTML form using an <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> tag <br /> <br /> <code class="language-plaintext highlighter-rouge">number</code>: A numeric value. Represented in an HTML form using an <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> tag <br /> <br /> <code class="language-plaintext highlighter-rouge">datetime</code>: The input generated must be able to transform into a valid ISO 8601 date. Represented in an HTML form using <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> tags <br /> <br /> <code class="language-plaintext highlighter-rouge">text</code>: A string of characters that may contain line breaks. Represented in an HTML form using an <code class="language-plaintext highlighter-rouge">&lt;textarea&gt;</code> tag  <br /> <br />  <code class="language-plaintext highlighter-rouge">singlevaluelist</code>: A set of predefined values (specified in this response) where only one value may be selected. Represented in an HTML form using the <code class="language-plaintext highlighter-rouge">&lt;select&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;option&gt;</code> tags <br /> <br />  <code class="language-plaintext highlighter-rouge">multivaluelist</code>: A set of predefined values (specified in this response) where several values may be selected. Represented in an HTML form using the <code class="language-plaintext highlighter-rouge">&lt;select multiple="multiple"&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;option&gt;</code> tags</td>
+      <td>Options: <code class="language-plaintext highlighter-rouge">string</code>, <code class="language-plaintext highlighter-rouge">number</code>, <code class="language-plaintext highlighter-rouge">datetime</code>, <code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">singlevaluelist</code>, <code class="language-plaintext highlighter-rouge">multivaluelist</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">required</code></td>
+      <td><code class="language-plaintext highlighter-rouge">true</code> means that the value is required to submit service request <br /><br />  <code class="language-plaintext highlighter-rouge">false</code> means that the value not required.</td>
+      <td>Options: <code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datatype_description</code></td>
+      <td>A description of the datatype which helps the user provide their input</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">order</code></td>
+      <td>The sort order that the attributes will be presented to the user. 1 is shown first in the list.</td>
+      <td>Any positive integer not used for other attributes in the same service_code</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>An description of the attribute field with instructions for the user to find and identify the requested information</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">values</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">value</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">key</code></td>
+      <td>The unique identifier associated with an option for singlevaluelist or multivaluelist. This is analogous to the value attribute in an html option tag.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name</code></td>
+      <td>The human readable title of an option for singlevaluelist or multivaluelist. This is analogous to the innerhtml text node of an html option tag.</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="possible-errors-1">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - service_code or jurisdiction_id provided were not found (specify in error response)</li>
+  <li>400 - service_code or jurisdiction_id was not provided (specify in error response)</li>
+  <li>400 - General service error (Anything that fails during service list processing. The client will need to notify us)</li>
+</ul>
+
+<h4 id="example-response-1">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-service-definition" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-service-definition" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-service-definition"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service_definition&gt;
+    &lt;service_code&gt;DMV66&lt;/service_code&gt;
+    &lt;attributes&gt;
+        &lt;attribute&gt;
+            &lt;variable&gt;true&lt;/variable&gt;
+            &lt;code&gt;WHISHETN&lt;/code&gt;
+            &lt;datatype&gt;singlevaluelist&lt;/datatype&gt;
+            &lt;required&gt;true&lt;/required&gt;
+            &lt;datatype_description&gt;&lt;/datatype_description&gt;
+            &lt;order&gt;1&lt;/order&gt;
+            &lt;description&gt;What is the ticket/tag/DL number?&lt;/description&gt;
+            &lt;values&gt;
+                &lt;value&gt;
+                    &lt;key&gt;123&lt;/key&gt;
+                    &lt;name&gt;Ford&lt;/name&gt;
+                &lt;/value&gt;
+                &lt;value&gt;
+                    &lt;key&gt;124&lt;/key&gt;
+                    &lt;name&gt;Chrysler&lt;/name&gt;
+                &lt;/value&gt;
+            &lt;/values&gt;
+        &lt;/attribute&gt;
+    &lt;/attributes&gt;
+&lt;/service_definition&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-service-definition"><div class="highlight"><pre class="highlight"><code>{
+  "service_code":"DMV66",
+  "attributes":[
+    {
+      "variable":true,
+      "code":"WHISHETN",
+      "datatype":"singlevaluelist",
+      "required":true,
+      "datatype_description":null,
+      "order":1,
+      "description":"What is the ticket/tag/DL number?",
+      "values":[
+        {
+          "key":123,
+          "name":"Ford"
+        },
+        {
+          "key":124,
+          "name":"Chrysler"
+        }
+      ]
+    }
+  ]
+}
+</code></pre></div>  </div>
+</div>
+
+<h3 id="post-service-request">POST Service Request</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Purpose</td>
+      <td>Create service requests</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>[https://<a href="https://[API">API</a> endpoint]/requests.[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/requests.xml</td>
+    </tr>
+    <tr>
+      <td>Format sent</td>
+      <td>Content-Type: application/x-www-form-urlencoded</td>
+    </tr>
+    <tr>
+      <td>Formats returned</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>POST</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments-2">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td> </td>
+      <td>This is obtained from <a href="/#GET_Service_List" title="wikilink">GET Service List</a> method</td>
+    </tr>
+    <tr>
+      <td><span class="field-alternatives">location parameter</span></td>
+      <td>A full location parameter must be submitted.</td>
+      <td>One of <code class="language-plaintext highlighter-rouge">lat</code> &amp; <code class="language-plaintext highlighter-rouge">long</code> or <code class="language-plaintext highlighter-rouge">address_string</code> or <code class="language-plaintext highlighter-rouge">address_id</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">attribute</code></td>
+      <td>An array of key/value responses based on Service Definitions.</td>
+      <td>This takes the form of attribute[code]=value where multiple code/value pairs can be specified as well as multiple values for the same code in the case of a multivaluelist datatype (attribute[code1][]=value1&amp;attribute[code1][]=value2&amp;attribute[code1][]=value3) - see example. <br /><br /> <span style="color:red">This is only required if the service_code requires a service definition with required fields`.</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="optional-arguments-1">Optional Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lat</code></td>
+      <td>Latitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td><code class="language-plaintext highlighter-rouge">lat</code> &amp; <code class="language-plaintext highlighter-rouge">long</code> both need to be sent even though they are sent as two separate parameters. <code class="language-plaintext highlighter-rouge">lat</code> &amp; <code class="language-plaintext highlighter-rouge">long</code> are required if no <code class="language-plaintext highlighter-rouge">address_string</code> or <code class="language-plaintext highlighter-rouge">address_id</code> is provided.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">long</code></td>
+      <td>Longitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td><code class="language-plaintext highlighter-rouge">lat</code> &amp; <code class="language-plaintext highlighter-rouge">long</code> both need to be sent even though they are sent as two separate parameters. <code class="language-plaintext highlighter-rouge">lat</code> &amp; <code class="language-plaintext highlighter-rouge">long</code> are required if no <code class="language-plaintext highlighter-rouge">address_string</code> or <code class="language-plaintext highlighter-rouge">address_id</code> is provided.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address_string</code></td>
+      <td>Human entered address or description of location.</td>
+      <td>This is required if no <code class="language-plaintext highlighter-rouge">lat</code>/<code class="language-plaintext highlighter-rouge">long</code> or <code class="language-plaintext highlighter-rouge">address_id</code> are provided. This should be written from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address_id</code></td>
+      <td>The internal address ID used by a jurisdiction’s master address repository or other addressing system.</td>
+      <td>This is required if no <code class="language-plaintext highlighter-rouge">lat</code>/<code class="language-plaintext highlighter-rouge">long</code> or <code class="language-plaintext highlighter-rouge">address_string</code> are provided.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">email</code></td>
+      <td>The email address of the person submitting the request</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">device_id</code></td>
+      <td>The unique device ID of the device submitting the request. This is usually only used for mobile devices.</td>
+      <td>Android devices can use TelephonyManager.getDeviceId() and iPhones can use [UIDevice currentDevice].uniqueIdentifier</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">account_id</code></td>
+      <td>The unique ID for the user account of the person submitting the request</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_name</code></td>
+      <td>The given name of the person submitting the request</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">last_name</code></td>
+      <td>The family name of the person submitting the request</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">phone</code></td>
+      <td>The phone number of the person submitting the request</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>A full description of the request or report being submitted.</td>
+      <td>This may contain line breaks, but not html or code. Otherwise, this is free form text limited to 4,000 characters.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">media_url</code></td>
+      <td>A URL to media associated with the request, eg an image.</td>
+      <td>A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-2">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_requests</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">request</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_request_id</code></td>
+      <td>The unique ID of the service request created.</td>
+      <td><span style="color: red">This should not be returned if token is returned</span></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">token</code></td>
+      <td>If returned, use this to call <a href="/#GET_service_request_id_from_a_token" title="wikilink">GET service_request_id from a token</a>.</td>
+      <td><span style="color: red">This should not be returned if service_request_id is returned</span></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_notice</code></td>
+      <td>Information about the action expected to fulfill the request or otherwise address the information reported.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">account_id</code></td>
+      <td>The unique ID for the user account of the person submitting the request.</td>
+      <td>May not be returned</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="possible-errors-2">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - service_code or jurisdiction_id was not found (specified in error response)</li>
+  <li>400 - service_code or jurisdiction_id was not provided (specified in error response)</li>
+  <li>400 - General Service Error (Any failure during create request processing, eg CRM is down. Client will need to notify us)</li>
+</ul>
+
+<h4 id="example-request">Example Request</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /dev/v2/requests.xml
+Host: api.city.gov
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+
+api_key=xyz&amp;jurisdiction_id=city.gov&amp;service_code=001&amp;lat=37.76524078&amp;long=-122.4212043&amp;address_string=1234+5th+street&amp;email=smit333%40sfgov.edu&amp;device_id=tt222111&amp;account_id=123456&amp;first_name=john&amp;last_name=smith&amp;phone=111111111&amp;description=A+large+sinkhole+is+destroying+the+street&amp;media_url=http%3A%2F%2Ffarm3.static.flickr.com%2F2002%2F2212426634_5ed477a060.jpg&amp;attribute[WHISPAWN]=123456&amp;attribute[WHISDORN]=COISL001
+</code></pre></div></div>
+
+<h4 id="example-response-2">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-service-request-post" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-service-request-post" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-service-request-post"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service_requests&gt;
+    &lt;request&gt;
+        &lt;service_request_id&gt;293944&lt;/service_request_id&gt;
+        &lt;service_notice&gt;
+            The City will inspect and require the responsible party to correct within 24 hours and/or issue a Correction Notice or Notice of Violation of the Public Works Code
+        &lt;/service_notice&gt;
+        &lt;account_id/&gt;
+    &lt;/request&gt;
+&lt;/service_requests&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-service-request-post"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "service_request_id":293944,
+    "service_notice":"The City will inspect and require the responsible party to correct within 24 hours and/or issue a Correction Notice or Notice of Violation of the Public Works Code",
+    "account_id":null
+  }
+]
+</code></pre></div>  </div>
+</div>
+
+<h3 id="get-service_request_id-from-a-token">GET service_request_id from a token</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Conditional</td>
+      <td>Yes - <span style="font-weight : bold; color: red">This call is only necessary if the response from <em>POST Service Request</em> contains a token</span></td>
+    </tr>
+    <tr>
+      <td>Purpose</td>
+      <td>Get the service_request_id from a temporary token. This is unnecessary if the response from creating a service request does not contain a token.</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>[https://<a href="https://[API">API</a> endpoint]/tokens/[token id].[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/tokens/123456.xml?jurisdiction_id=city.gov</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments-3">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+    <tr>
+      <td><code class="field-url">token</code></td>
+      <td> </td>
+      <td>This is obtained from the <a href="/#POST_Service_Requests" title="wikilink">POST Service Requests</a> method</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-3">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_requests</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">request</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_request_id</code></td>
+      <td>The unique ID for the service request created. This can be used to call the <a href="/#GET_Service_Request" title="wikilink">GET Service Request</a> method.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">token</code></td>
+      <td>The token ID used to make this call.</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="possible-errors-3">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - jurisdiction_id or token not found (specified in error response)</li>
+  <li>400 - jurisdiction_id or token was not provided (specified in error response)</li>
+  <li>400 - General Service error (Any failure during service query processing. Client will have to notify us)</li>
+</ul>
+
+<h4 id="example-response-3">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-request-from-token" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-request-from-token" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-request-from-token"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service_requests&gt;
+    &lt;request&gt;
+        &lt;service_request_id&gt;638344&lt;/service_request_id&gt;
+        &lt;token&gt;12345&lt;/token&gt;
+    &lt;/request&gt;
+&lt;/service_requests&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-request-from-token"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "service_request_id":638344,
+    "token":12345
+  }
+]
+</code></pre></div>  </div>
+</div>
+
+<h3 id="get-service-requests">GET Service Requests</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Purpose</td>
+      <td>Query the current status of multiple requests</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>https://[API endpoint]/requests.[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/requests.xml?start_date=2010-05-24T00:00:00Z&amp;end_date=2010-06-24T00:00:00Z&amp;status=open&amp;jurisdiction_id=city.gov</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments-4">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="optional-arguments-2">Optional Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_request_id</code></td>
+      <td>To call multiple Service Requests at once, multiple service_request_id can be declared; comma delimited.</td>
+      <td>This overrides all other arguments.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td>Specify the service type by calling the unique ID of the service_code.</td>
+      <td>This defaults to all service codes when not declared; can be declared multiple times, comma delimited</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">start_date</code></td>
+      <td>Earliest datetime to include in search. When provided with end_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.</td>
+      <td>When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">end_date</code></td>
+      <td>Latest datetime to include in search. When provided with start_date, allows one to search for requests which have a requested_datetime that matches a given range, but may not span more than 90 days.</td>
+      <td>When not specified, the range defaults to most recent 90 days. Must use w3 format, eg 2010-01-01T00:00:00Z.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status</code></td>
+      <td>Allows one to search for requests which have a specific status. This defaults to all statuses; can be declared multiple times, comma delimited;</td>
+      <td>Options: <code class="language-plaintext highlighter-rouge">open</code>, <code class="language-plaintext highlighter-rouge">closed</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-4">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_requests</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">request</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_request_id</code></td>
+      <td>The unique ID of the service request created.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status</code></td>
+      <td>The current status of the service request. <br /><br />   <code class="language-plaintext highlighter-rouge">open</code>: it has been reported. <br /><br />   <code class="language-plaintext highlighter-rouge">closed</code>: it has been resolved.</td>
+      <td>Options: <code class="language-plaintext highlighter-rouge">open</code>, <code class="language-plaintext highlighter-rouge">closed</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status_notes</code></td>
+      <td>Explanation of why status was changed to current state or more details on current status than conveyed with status alone.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_name</code></td>
+      <td>The human readable name of the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td>The unique identifier for the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>A full description of the request or report submitted.</td>
+      <td>This may contain line breaks, but not html or code. Otherwise, this is free form text limited to 4,000 characters.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agency_responsible</code></td>
+      <td>The agency responsible for fulfilling or otherwise addressing the service request.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_notice</code></td>
+      <td>Information about the action expected to fulfill the request or otherwise address the information reported.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">requested_datetime</code></td>
+      <td>The date and time when the service request was made.</td>
+      <td>Returned in w3 format, eg 2010-01-01T00:00:00Z</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">updated_datetime</code></td>
+      <td>The date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed.</td>
+      <td>Returned in w3 format, eg 2010-01-01T00:00:00Z</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">expected_datetime</code></td>
+      <td>The date and time when the service request can be expected to be fulfilled. This may be based on a service-specific service level agreement.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address</code></td>
+      <td>Human readable address or description of location.</td>
+      <td>This should be provided from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address_id</code></td>
+      <td>The internal address ID used by a jurisdictions master address repository or other addressing system.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zipcode</code></td>
+      <td>The postal code for the location of the service request.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lat</code></td>
+      <td>latitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">long</code></td>
+      <td>longitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">media_url</code></td>
+      <td>A URL to media associated with the request, eg an image.</td>
+      <td>A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="response-volume">Response Volume</h4>
+
+<ul>
+  <li>Default query limit is a span of 90 days or first 1000 requests returned, whichever is smallest.</li>
+</ul>
+
+<h4 id="possible-errors-4">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - jurisdiction_id not found (specified in error response)</li>
+  <li>400 - jurisdiction_id was not provided (specified in error response)</li>
+  <li>400 - General Service error (Any failure during service query processing. Client will have to notify us)</li>
+</ul>
+
+<h4 id="example-response-4">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-service-requests" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-service-requests" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-service-requests"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service_requests&gt;
+    &lt;request&gt;
+        &lt;service_request_id&gt;638344&lt;/service_request_id&gt;
+        &lt;status&gt;closed&lt;/status&gt;
+        &lt;status_notes&gt;Duplicate request.&lt;/status_notes&gt;
+        &lt;service_name&gt;Sidewalk and Curb Issues&lt;/service_name&gt;
+        &lt;service_code&gt;006&lt;/service_code&gt;
+        &lt;description&gt;&lt;/description&gt;
+        &lt;agency_responsible&gt;&lt;/agency_responsible&gt;
+        &lt;service_notice&gt;&lt;/service_notice&gt;
+        &lt;requested_datetime&gt;2010-04-14T06:37:38-08:00&lt;/requested_datetime&gt;
+        &lt;updated_datetime&gt;2010-04-14T06:37:38-08:00&lt;/updated_datetime&gt;
+        &lt;expected_datetime&gt;2010-04-15T06:37:38-08:00&lt;/expected_datetime&gt;
+        &lt;address&gt;8TH AVE and JUDAH ST&lt;/address&gt;
+        &lt;address_id&gt;545483&lt;/address_id&gt;
+        &lt;zipcode&gt;94122&lt;/zipcode&gt;
+        &lt;lat&gt;37.762221815&lt;/lat&gt;
+        &lt;long&gt;-122.4651145&lt;/long&gt;
+        &lt;media_url&gt;http://city.gov.s3.amazonaws.com/requests/media/638344.jpg &lt;/media_url&gt;
+    &lt;/request&gt;
+    &lt;request&gt;
+        &lt;service_request_id&gt;638349&lt;/service_request_id&gt;
+        &lt;status&gt;open&lt;/status&gt;
+        &lt;status_notes&gt;&lt;/status_notes&gt;
+        &lt;service_name&gt;Sidewalk and Curb Issues&lt;/service_name&gt;
+        &lt;service_code&gt;006&lt;/service_code&gt;
+        &lt;description&gt;&lt;/description&gt;
+        &lt;agency_responsible&gt;&lt;/agency_responsible&gt;
+        &lt;service_notice&gt;&lt;/service_notice&gt;
+        &lt;requested_datetime&gt;2010-04-19T06:37:38-08:00&lt;/requested_datetime&gt;
+        &lt;updated_datetime&gt;2010-04-19T06:37:38-08:00&lt;/updated_datetime&gt;
+        &lt;expected_datetime&gt;2010-04-19T06:37:38-08:00&lt;/expected_datetime&gt;
+        &lt;address&gt;8TH AVE and JUDAH ST&lt;/address&gt;
+        &lt;address_id&gt;545483&lt;/address_id&gt;
+        &lt;zipcode&gt;94122&lt;/zipcode&gt;
+        &lt;lat&gt;37.762221815&lt;/lat&gt;
+        &lt;long&gt;-122.4651145&lt;/long&gt;
+        &lt;media_url&gt;http://city.gov.s3.amazonaws.com/requests/media/638349.jpg &lt;/media_url&gt;
+    &lt;/request&gt;
+&lt;/service_requests&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-service-requests"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "service_request_id":638344,
+    "status":"closed",
+    "status_notes":"Duplicate request.",
+    "service_name":"Sidewalk and Curb Issues",
+    "service_code":006,
+    "description":null,
+    "agency_responsible":null,
+    "service_notice":null,
+    "requested_datetime":"2010-04-14T06:37:38-08:00",
+    "updated_datetime":"2010-04-14T06:37:38-08:00",
+    "expected_datetime":"2010-04-15T06:37:38-08:00",
+    "address":"8TH AVE and JUDAH ST",
+    "address_id":545483,
+    "zipcode":94122,
+    "lat":37.762221815,
+    "long":-122.4651145,
+    "media_url":"http://city.gov.s3.amazonaws.com/requests/media/638344.jpg "
+  },
+  {
+    "service_request_id":638349,
+    "status":"open",
+    "status_notes":null,
+    "service_name":"Sidewalk and Curb Issues",
+    "service_code":006,
+    "description":null,
+    "agency_responsible":null,
+    "service_notice":null,
+    "requested_datetime":"2010-04-19T06:37:38-08:00",
+    "updated_datetime":"2010-04-19T06:37:38-08:00",
+    "expected_datetime":"2010-04-19T06:37:38-08:00",
+    "address":"8TH AVE and JUDAH ST",
+    "address_id":545483,
+    "zipcode":94122,
+    "lat":37.762221815,
+    "long":-122.4651145,
+    "media_url":"http://city.gov.s3.amazonaws.com/requests/media/638349.jpg"
+  }
+]
+</code></pre></div>  </div>
+</div>
+
+<h3 id="get-service-request">GET Service Request</h3>
+
+<table class="table table-bordered table-striped resource-table">
+  <tbody>
+    <tr>
+      <td>Purpose</td>
+      <td>Query the current status of an individual request</td>
+    </tr>
+    <tr>
+      <td>URL</td>
+      <td>https://[API endpoint]/requests/[service_request_id].[format]</td>
+    </tr>
+    <tr>
+      <td>Sample URL</td>
+      <td>https://api.city.gov/dev/v2/requests/123456.xml?jurisdiction_id=city.gov</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>XML (JSON available if denoted by <a href="/Service_Discovery" title="wikilink">Service Discovery</a>)</td>
+    </tr>
+    <tr>
+      <td>HTTP Method</td>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <td>Requires API Key</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="required-arguments-5">Required Arguments</h4>
+
+<table class="table table-bordered table-striped request-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction_id</code></td>
+      <td> </td>
+      <td><span style="color: red">This is only required if the endpoint serves multiple jurisdictions</span></td>
+    </tr>
+    <tr>
+      <td><code class="field-url">service_request_id</code></td>
+      <td> </td>
+      <td>The service_request_id is specified in the main URL path rather than an added query string parameter.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="optional-arguments-3">Optional Arguments</h4>
+
+<p>None</p>
+
+<h4 id="response-5">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_requests</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">request</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_request_id</code></td>
+      <td>The unique ID of the service request created.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status</code></td>
+      <td>The current status of the service request. <br /><br /><code class="language-plaintext highlighter-rouge">open</code>: it has been reported. <br /><br /><code class="language-plaintext highlighter-rouge">closed</code>: it has been resolved.</td>
+      <td>Options: <code class="language-plaintext highlighter-rouge">open</code>, <code class="language-plaintext highlighter-rouge">closed</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status_notes</code></td>
+      <td>Explanation of why status was changed to current state or more details on current status than conveyed with status alone.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_name</code></td>
+      <td>The human readable name of the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_code</code></td>
+      <td>The unique identifier for the service request type</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>A full description of the request or report submitted.</td>
+      <td>This may contain line breaks, but not html or code. Otherwise, this is free form text limited to 4,000 characters.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agency_responsible</code></td>
+      <td>The agency responsible for fulfilling or otherwise addressing the service request.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">service_notice</code></td>
+      <td>Information about the action expected to fulfill the request or otherwise address the information reported.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">requested_datetime</code></td>
+      <td>The date and time when the service request was made.</td>
+      <td>Returned in w3 format, eg 2010-01-01T00:00:00Z</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">updated_datetime</code></td>
+      <td>The date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed.</td>
+      <td>Returned in w3 format, eg 2010-01-01T00:00:00Z</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">expected_datetime</code></td>
+      <td>The date and time when the service request can be expected to be fulfilled. This may be based on a service-specific service level agreement.</td>
+      <td>May not be returned</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address</code></td>
+      <td>Human readable address or description of location.</td>
+      <td>This should be provided from most specific to most general geographic unit, eg address number or cross streets, street name, neighborhood/district, city/town/village, county, postal code.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">address_id</code></td>
+      <td>The internal address ID used by a jurisdictions master address repository or other addressing system.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zipcode</code></td>
+      <td>The postal code for the location of the service request.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lat</code></td>
+      <td>latitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">long</code></td>
+      <td>longitude using the <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">(WGS84)</a> projection.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">media_url</code></td>
+      <td>A URL to media associated with the request, eg an image.</td>
+      <td>A convention for parsing media from this URL has yet to be established, so currently it will be done on a case by case basis much like Twitter.com does. For example, if a jurisdiction accepts photos submitted via Twitpic.com, then clients can parse the page at the Twitpic URL for the image given the conventions of Twitpic.com. This could also be a URL to a media RSS feed where the clients can parse for media in a more structured way.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="possible-errors-5">Possible Errors</h4>
+
+<p>The numbers represent the HTTP status code returned for each error type:</p>
+
+<ul>
+  <li>404 - jurisdiction_id not found (specified in error response)</li>
+  <li>400 - jurisdiction_id was not provided (specified in error response)</li>
+  <li>400 - General Service error (Any failure during service query processing. Client will have to notify us)</li>
+</ul>
+
+<h4 id="example-response-5">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-service-request" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-service-request" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-service-request"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service_requests&gt;
+    &lt;request&gt;
+        &lt;service_request_id&gt;638344&lt;/service_request_id&gt;
+        &lt;status&gt;closed&lt;/status&gt;
+        &lt;status_notes&gt;Duplicate request.&lt;/status_notes&gt;
+        &lt;service_name&gt;Sidewalk and Curb Issues&lt;/service_name&gt;
+        &lt;service_code&gt;006&lt;/service_code&gt;
+        &lt;description&gt;&lt;/description&gt;
+        &lt;agency_responsible&gt;&lt;/agency_responsible&gt;
+        &lt;service_notice&gt;&lt;/service_notice&gt;
+        &lt;requested_datetime&gt;2010-04-14T06:37:38-08:00&lt;/requested_datetime&gt;
+        &lt;updated_datetime&gt;2010-04-14T06:37:38-08:00&lt;/updated_datetime&gt;
+        &lt;expected_datetime&gt;2010-04-15T06:37:38-08:00&lt;/expected_datetime&gt;
+        &lt;address&gt;8TH AVE and JUDAH ST&lt;/address&gt;
+        &lt;address_id&gt;545483&lt;/address_id&gt;
+        &lt;zipcode&gt;94122&lt;/zipcode&gt;
+        &lt;lat&gt;37.762221815&lt;/lat&gt;
+        &lt;long&gt;-122.4651145&lt;/long&gt;
+        &lt;media_url&gt;http://city.gov.s3.amazonaws.com/requests/media/638344.jpg &lt;/media_url&gt;
+    &lt;/request&gt;
+&lt;/service_requests&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-service-request"><div class="highlight"><pre class="highlight"><code>[
+  {
+    "service_request_id":638344,
+    "status":"closed",
+    "status_notes":"Duplicate request.",
+    "service_name":"Sidewalk and Curb Issues",
+    "service_code":006,
+    "description":null,
+    "agency_responsible":null,
+    "service_notice":null,
+    "requested_datetime":"2010-04-14T06:37:38-08:00",
+    "updated_datetime":"2010-04-14T06:37:38-08:00",
+    "expected_datetime":"2010-04-15T06:37:38-08:00",
+    "address":"8TH AVE and JUDAH ST",
+    "address_id":545483,
+    "zipcode":94122,
+    "lat":37.762221815,
+    "long":-122.4651145,
+    "media_url":"http://city.gov.s3.amazonaws.com/requests/media/638344.jpg"
+  }
+]
+</code></pre></div>  </div>
+</div>
+
+<h3 id="errors">Errors</h3>
+
+<h4 id="response-6">Response</h4>
+
+<table class="table table-bordered table-striped response-table">
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Description</th>
+      <th>Notes &amp; Requirements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">errors</code> ⇊</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">error</code> ↴</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">code</code></td>
+      <td>The error code representing the type of error. In most cases, this should match the HTTP status code returned in the HTTP header.</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">description</code></td>
+      <td>A human readable description of the error that occurred. This is meant to be seen by the user.</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><strong>General Errors</strong>
+    <ul>
+      <li>403 - Missing or Invalid API Key (specify in error message)</li>
+      <li>400 - The URL request is invalid or open311 service is not running or reachable. Client should notify us after checking URL</li>
+    </ul>
+  </li>
+</ul>
+
+<p>HTTP error codes are required, but the code in the response body shouldn’t necessarily match the HTTP error code, so that more specific and unique error code identifiers can be used. The HTTP error codes should always be 404 for resources that don’t exist, 403 for errors because of wrong or missing api_key and basically 400 for any other error where the request can not be fulfilled as expected. Multiple errors codes and descriptions can be returned in the body (the response is an array).</p>
+
+<h4 id="example-response-6">Example Response</h4>
+
+<ul class="nav nav-tabs">
+  <li><a href="#xml-errors" role="tab" data-toggle="tab">XML</a></li>
+  <li><a href="#json-errors" role="tab" data-toggle="tab">JSON</a></li>
+</ul>
+
+<div class="tab-content">
+
+  <div class="language-plaintext tab-pane active highlighter-rouge" id="xml-errors"><div class="highlight"><pre class="highlight"><code>HTTP/1.1 403 Forbidden
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;errors&gt;
+    &lt;error&gt;
+        &lt;code&gt;403&lt;/code&gt;
+        &lt;description&gt;Invalid api_key received -- can't proceed with create_request.&lt;/description&gt;
+    &lt;/error&gt;
+&lt;/errors&gt;
+</code></pre></div>  </div>
+
+  <div class="language-plaintext tab-pane highlighter-rouge" id="json-errors"><div class="highlight"><pre class="highlight"><code>HTTP/1.1 403 Forbidden
+
+[
+  {
+    "code":403,
+    "description":"Invalid api_key received -- can't proceed with create_request."
+  }
+]
+</code></pre></div>  </div>
+</div>
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <a class="navbar-brand" href="//open311.org"><h1>Open311</h1></a>
+
+       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="//www.open311.org/about">Blog</a></li>
+ 
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/">Wiki</a></li>
+                <li><a href="/GeoReport_v2">GeoReport v2</a></li>
+              </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Discussion<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="//lists.open311.org/groups/discuss">Mailing List</a></li>
+                <li><a href="//github.com/open311/open311.github.io/issues">Issue Tracker</a></li>
+              </ul>
+            </li>
+
+            <li><a href="//www.open311.org/about">About</a></li>
+            <li><a href="//www.open311.org/contact">Contact</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8102379-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+  </body>
+</html>
+

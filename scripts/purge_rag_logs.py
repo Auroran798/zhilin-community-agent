@@ -1,6 +1,6 @@
 """Purge expired query logs and their feedback according to configured retention."""
 import sys
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from api.config import settings

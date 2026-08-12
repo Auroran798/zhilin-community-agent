@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-CN-BJ-001",
+  "source_url": "https://www.beijing.gov.cn/zhengce/zhengcefagui/qtwj/202204/t20220414_2676926.html",
+  "local_path": "official/china/beijing_property_fire_safety_notice.html",
+  "acquired_at": "2026-08-10T04:45:38.942311+00:00",
+  "byte_size": 27235,
+  "sha256": "9f2b8cd3ff8b3f1b32e3de8c9879c2c6cd1cf6f478a5277676c8c65a785719f6",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

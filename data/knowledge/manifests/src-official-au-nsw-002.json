@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-AU-NSW-002",
+  "source_url": "https://www.nsw.gov.au/housing-and-construction/renting-a-place-to-live/getting-repairs-done",
+  "local_path": "official/international/au_nsw_getting_repairs_done.html",
+  "acquired_at": "2026-08-10T04:45:38.952140+00:00",
+  "byte_size": 168938,
+  "sha256": "29cf6e05c943a9a20167b19bebc1d1bd1080381f6d3032c4e685dcaaa43278e7",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

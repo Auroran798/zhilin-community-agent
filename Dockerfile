@@ -33,6 +33,6 @@ RUN if command -v tdnf >/dev/null 2>&1; then \
 
 COPY --chown=zhilin:zhilin . .
 RUN python3 -m pip install --no-deps --no-build-isolation .
-RUN mkdir -p /app/data && chown -R zhilin:zhilin /app/data
+RUN mkdir -p /app/data /app/runtime && chown -R zhilin:zhilin /app/data /app/runtime
 USER zhilin
 CMD ["uvicorn","api.main:app","--host","0.0.0.0","--port","8000"]

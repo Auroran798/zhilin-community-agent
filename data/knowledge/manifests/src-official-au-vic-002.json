@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-AU-VIC-002",
+  "source_url": "https://www.consumer.vic.gov.au/resources-and-tools/advice-in-a-disaster/renting",
+  "local_path": "official/international/au_vic_renting_disaster_advice.html",
+  "acquired_at": "2026-08-10T04:45:38.957126+00:00",
+  "byte_size": 66165,
+  "sha256": "0d34568227dabebc88fa98a2b50fcccb465399ce2b2289a04e66c31ce79815bc",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

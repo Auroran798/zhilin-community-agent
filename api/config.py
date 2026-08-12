@@ -9,6 +9,11 @@ class Settings(BaseSettings):
     # demo keeps synthetic tenant data; public_real exposes only the separate,
     # sanitized public-regulatory schema to authorised staff.
     data_mode: str = "demo"
+    # Product scope is independent from the operational data backend.  The
+    # default is the Beijing domestic assistant; foreign material is opt-in.
+    product_mode: str = "domestic_beijing"
+    default_domestic_jurisdiction: str = "北京市"
+    demo_community_jurisdiction: str = "Demo Garden"
     public_real_query_limit: int = 100
     jwt_secret: str = "development-only-change-this-secret-to-32-bytes"
     jwt_algorithm: str = "HS256"
@@ -19,7 +24,7 @@ class Settings(BaseSettings):
     sla_hours_p3: int = 72
     rag_enabled: bool = True
     rag_storage_path: str = "data/knowledge/files"
-    rag_chroma_path: str = "data/knowledge/chroma"
+    rag_chroma_path: str = "data/knowledge/chroma_beijing_v1"
     rag_collection_prefix: str = "property_kb"
     rag_index_schema_version: str = "2"
     rag_chunk_size: int = 700
@@ -29,10 +34,17 @@ class Settings(BaseSettings):
     rag_final_context_k: int = 5
     rag_hybrid_enabled: bool = True
     rag_rerank_enabled: bool = True
+    rag_rrf_k: int = 60
+    rag_candidate_k: int = 40
     rag_embedding_provider: str = "hash"
     rag_embedding_model: str = "hashing-v1"
     rag_embedding_api_base: str | None = None
     rag_embedding_api_key: str | None = None
+    rag_reranker_provider: str = "lexical"
+    rag_reranker_model: str = "lexical-v1"
+    rag_reranker_api_base: str | None = None
+    rag_reranker_api_key: str | None = None
+    rag_reranker_timeout_seconds: int = 30
     rag_llm_provider: str = "disabled"
     rag_llm_model: str | None = None
     rag_llm_api_base: str | None = None
@@ -85,6 +97,8 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def reject_unsafe_production_settings(self):
         """Fail closed when a development-only setting reaches production."""
+        if self.product_mode not in {"domestic_beijing","international_research","demo_garden"}:
+            raise ValueError("PRODUCT_MODE must be domestic_beijing, international_research, or demo_garden")
         if self.app_env.lower() not in {"production", "prod"}:
             return self
         weak_markers = ("development-only", "change-this", "changethis", "demo")
@@ -98,6 +112,8 @@ class Settings(BaseSettings):
             raise ValueError("Production must not silently fall back to the local tool backend")
         if self.harness_failure_injection:
             raise ValueError("Failure injection is test-only")
+        if self.rag_enabled and self.rag_embedding_provider.lower() == "hash":
+            raise ValueError("Production RAG requires a real multilingual embedding provider; hashing-v1 is test/demo fallback only")
         return self
 
 settings = Settings()

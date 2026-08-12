@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-NZ-005",
+  "source_url": "https://www.tenancy.govt.nz/assets/forms-templates/landlord-compliance-checklist.pdf",
+  "local_path": "official/international/nz_landlord_compliance_checklist.pdf",
+  "acquired_at": "2026-08-10T04:48:55.746415+00:00",
+  "byte_size": 808721,
+  "sha256": "6e0ca440ccfdc3c6859ae4ea690df0785fbd3779e2095d10c4316a45d3d06184",
+  "content_type": "application/pdf",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

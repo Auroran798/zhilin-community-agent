@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-NZ-004",
+  "source_url": "https://www.tenancy.govt.nz/assets/Uploads/landlord-guide-to-the-healthy-homes-standards-use-this-guide-to-make-sure-your-rental-is-healthy-and-stays-that-way.pdf",
+  "local_path": "official/international/nz_healthy_homes_landlord_guide.pdf",
+  "acquired_at": "2026-08-10T04:45:38.962971+00:00",
+  "byte_size": 1716016,
+  "sha256": "60b25f1ccf4f2c9e4c9f00f40ff306d0000a38a772be78d36a3cdb2525b742bd",
+  "content_type": "application/pdf",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

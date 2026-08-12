@@ -1,0 +1,96 @@
+name: zhilin-beijing-submission
+
+x-runtime-environment: &runtime-environment
+  APP_ENV: development
+  APP_NAME: 智邻管家（北京物业智能体提交版）
+  DATABASE_URL: sqlite:////app/runtime/zhilin.db
+  DATA_MODE: demo
+  PRODUCT_MODE: domestic_beijing
+  DEFAULT_DOMESTIC_JURISDICTION: 北京市
+  DEMO_COMMUNITY_JURISDICTION: Demo Garden
+  JWT_SECRET: submission-demo-only-secret-2026-change-before-production
+  DEMO_PASSWORD: DemoPass123!
+  RAG_ENABLED: "true"
+  RAG_STORAGE_PATH: /app/runtime/knowledge/files
+  RAG_CHROMA_PATH: /app/runtime/knowledge/chroma_beijing_v1
+  RAG_EMBEDDING_PROVIDER: hash
+  RAG_EMBEDDING_MODEL: hashing-v1
+  RAG_RERANKER_PROVIDER: lexical
+  RAG_RERANKER_MODEL: lexical-v1
+  RAG_LLM_PROVIDER: disabled
+  AGENT_ENABLED: "true"
+  AGENT_LLM_PROVIDER: fake
+  AGENT_CHECKPOINT_PATH: /app/runtime/agent_checkpoints.sqlite
+  STAGE6_READONLY_INTEGRATION_ENABLED: "false"
+  SUBMISSION_RUNTIME_DIR: /app/runtime
+
+services:
+  api:
+    image: zhilin-beijing:2026.08.11-amd64
+    pull_policy: never
+    platform: linux/amd64
+    command:
+      - python3
+      - scripts/container_submission_bootstrap.py
+      - --
+      - uvicorn
+      - api.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    environment: *runtime-environment
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - zhilin-runtime:/app/runtime
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready', timeout=5)"]
+      interval: 10s
+      timeout: 8s
+      retries: 60
+      start_period: 30s
+    restart: unless-stopped
+
+  web:
+    image: zhilin-beijing:2026.08.11-amd64
+    pull_policy: never
+    platform: linux/amd64
+    command:
+      - streamlit
+      - run
+      - web/app.py
+      - --server.address
+      - 0.0.0.0
+      - --server.port
+      - "8501"
+    environment:
+      API_BASE_URL: http://api:8000
+    ports:
+      - "${WEB_PORT:-8501}:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health', timeout=5)"]
+      interval: 10s
+      timeout: 8s
+      retries: 30
+    restart: unless-stopped
+
+  worker:
+    image: zhilin-beijing:2026.08.11-amd64
+    pull_policy: never
+    platform: linux/amd64
+    command: ["python3", "-m", "scripts.run_outbox_worker"]
+    environment: *runtime-environment
+    volumes:
+      - zhilin-runtime:/app/runtime
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  zhilin-runtime:
+    name: zhilin-beijing-submission-runtime

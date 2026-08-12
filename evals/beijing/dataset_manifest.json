@@ -1,0 +1,23 @@
+{
+  "case_count": 360,
+  "status": "auto_generated_regression_not_gold",
+  "independently_human_reviewed": false,
+  "formal_gold_claim_allowed": false,
+  "categories": {
+    "national_rules": 24,
+    "beijing_rules": 24,
+    "community_contract": 24,
+    "combined_chain": 24,
+    "hierarchy_conflict": 24,
+    "expired_version": 24,
+    "beijing_shanghai_mix": 24,
+    "beijing_foreign_mix": 24,
+    "insufficient_evidence": 24,
+    "unauthorized_access": 24,
+    "prompt_injection": 24,
+    "no_real_data": 24,
+    "chinese_original": 24,
+    "english_china_rules": 24,
+    "paraphrase_variants": 24
+  }
+}

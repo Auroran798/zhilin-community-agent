@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-08-10T12:54:08.682859+00:00",
+  "curated_count": 52,
+  "downloaded_count": 51,
+  "answerable_count": 50,
+  "pending_count": 2,
+  "registry": {
+    "status": "PASS",
+    "checked": 82,
+    "errors": [],
+    "warnings": []
+  },
+  "manifest_failures": []
+}

@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-008",
+  "requested_url": "https://banshi.beijing.gov.cn/pubtask/task/1/110102000000/1be1171c-df7b-4dc2-8f6f-9791b4232c71.html",
+  "retrieved_at": "2026-08-10T12:53:22.961366+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://banshi.beijing.gov.cn/pubtask/task/1/110102000000/1be1171c-df7b-4dc2-8f6f-9791b4232c71.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "banshi.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://banshi.beijing.gov.cn/pubtask/task/1/110102000000/1be1171c-df7b-4dc2-8f6f-9791b4232c71.html",
+  "final_host": "banshi.beijing.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 161073,
+  "sha256": "0b8c58377ecc7786a5ca854ff1978b470456bad878fd8d324dab7da5fc93e729",
+  "local_path": "official/china/beijing/src-official-cn-bj-008.html"
+}

@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-GLOBAL-001",
+  "source_url": "https://wiki.open311.org/GeoReport_v2/",
+  "local_path": "official/international/open311_georeport_v2.html",
+  "acquired_at": "2026-08-10T04:45:38.940103+00:00",
+  "byte_size": 75590,
+  "sha256": "c487f5263eecf022ad8d84f4ee886c2a1651454dfd8fe1abd007f99347865339",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

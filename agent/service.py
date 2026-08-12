@@ -1,9 +1,8 @@
 from __future__ import annotations
 import json,re,time,uuid
-from datetime import datetime,timedelta
+from datetime import timedelta
 from fastapi import HTTPException
 from langgraph.types import Command
-from sqlalchemy.orm import Session
 from api.config import settings
 from api.models import AgentConfirmation,AgentMemory,AgentMessage,AgentRun,AgentSession,AgentStaffReview,Binding,Property,User
 from api.services import audit
@@ -17,9 +16,9 @@ def record_message(db,sid,role,content,metadata=None):
     row=AgentMessage(session_id=sid,role=role,content=content[:4000],content_redacted=_redact(content),metadata_json=_safe(metadata) if metadata else None);db.add(row);db.commit();return row
 
 class AgentService:
-    def create_session(self,db,user):
+    def create_session(self,db,user,product_mode="domestic_beijing",jurisdiction=None):
         p=(db.query(Binding).filter_by(user_id=user.id,is_primary=True).first() or db.query(Binding).filter_by(user_id=user.id).first());prop=db.get(Property,p.property_id) if p else None
-        item=AgentSession(user_id=user.id,property_id=prop.id if prop else None,community_name=prop.community_name if prop else None);db.add(item);db.commit();return item
+        item=AgentSession(user_id=user.id,property_id=prop.id if prop else None,community_name=prop.community_name if prop else None,product_mode=product_mode,jurisdiction=jurisdiction);db.add(item);db.commit();return item
     def sessions(self,db,user):return db.query(AgentSession).filter_by(user_id=user.id).order_by(AgentSession.updated_at.desc()).all()
     def owned_session(self,db,user,sid):
         item=db.get(AgentSession,sid)
@@ -32,15 +31,18 @@ class AgentService:
         run.intent=result.get("intent");run.intent_confidence=result.get("intent_confidence");run.active_skill=result.get("active_skill");run.status=status;run.risk_level=result.get("risk_level","low");run.requires_manual_escalation=result.get("requires_manual_escalation",False);run.tool_name=result.get("tool_name");run.error_code=(result.get("tool_error") or "")[:64] or None;run.summary_json=_safe({"risk_flags":result.get("risk_flags",[]),"missing_fields":result.get("missing_fields",[])});run.latency_ms=int((time.perf_counter()-started)*1000);run.finished_at=utc_now();db.commit()
     def _payload(self,result,status,confirmation=None):
         action_preview=result.get("action_preview")
-        return {"session_id":result.get("session_id"),"run_id":result.get("run_id"),"status":status,"intent":result.get("intent"),"intent_confidence":result.get("intent_confidence"),"active_skill":result.get("active_skill"),"tool_name":result.get("tool_name"),"answer":result.get("final_answer"),"extracted_fields":result.get("extracted_fields",{}),"missing_fields":result.get("missing_fields",[]),"risk_level":result.get("risk_level","low"),"risk_flags":result.get("risk_flags",[]),"citations":result.get("rag_citations",[]),"tool_result":result.get("tool_result"),"action_preview":action_preview,"preview":action_preview,"confirmation_id":confirmation.id if confirmation else None,"staff_review_id":result.get("staff_review_id")}
-    def turn(self,db,user,sid,content):
+        return {"session_id":result.get("session_id"),"run_id":result.get("run_id"),"status":status,"product_mode":result.get("product_mode","domestic_beijing"),"jurisdiction":result.get("jurisdiction"),"intent":result.get("intent"),"intent_confidence":result.get("intent_confidence"),"active_skill":result.get("active_skill"),"tool_name":result.get("tool_name"),"answer":result.get("final_answer"),"extracted_fields":result.get("extracted_fields",{}),"missing_fields":result.get("missing_fields",[]),"risk_level":result.get("risk_level","low"),"risk_flags":result.get("risk_flags",[]),"citations":result.get("rag_citations",[]),"tool_result":result.get("tool_result"),"action_preview":action_preview,"preview":action_preview,"confirmation_id":confirmation.id if confirmation else None,"staff_review_id":result.get("staff_review_id")}
+    def turn(self,db,user,sid,content,product_mode=None,jurisdiction=None):
         if not settings.agent_enabled:raise HTTPException(503,"智能体功能未启用")
         session=self.owned_session(db,user,sid)
         if session.status=="cancelled":raise HTTPException(409,"会话已取消，请创建新会话")
         text=" ".join(content.split())[:2000]
         if not text:raise HTTPException(400,"消息不能为空")
-        record_message(db,sid,"user",text);rid=str(uuid.uuid4());run=self._run(db,session,rid);graph,conn=build_graph(db);started=time.perf_counter()
-        initial={"session_id":sid,"request_id":rid,"run_id":run.id,"user_id":user.id,"user_role":user.role,"current_input":text,"response_status":"running","follow_up_rounds":session.follow_up_rounds,"continue_previous":session.follow_up_rounds>0,"rag_citations":[],"tool_result":None,"tool_error":None,"action_preview":None,"proposed_action":None,"confirmation_status":None,"requires_manual_escalation":False,"risk_flags":[]}
+        mode=product_mode or session.product_mode or settings.product_mode
+        if mode not in {"domestic_beijing","international_research","demo_garden"}:raise HTTPException(400,"无效产品模式")
+        session.product_mode=mode;session.jurisdiction=jurisdiction or session.jurisdiction
+        record_message(db,sid,"user",text,{"product_mode":mode,"jurisdiction":session.jurisdiction});rid=str(uuid.uuid4());run=self._run(db,session,rid);graph,conn=build_graph(db);started=time.perf_counter()
+        initial={"session_id":sid,"request_id":rid,"run_id":run.id,"user_id":user.id,"user_role":user.role,"product_mode":mode,"jurisdiction":session.jurisdiction,"current_input":text,"response_status":"running","follow_up_rounds":session.follow_up_rounds,"continue_previous":session.follow_up_rounds>0,"rag_citations":[],"tool_result":None,"tool_error":None,"action_preview":None,"proposed_action":None,"confirmation_status":None,"requires_manual_escalation":False,"risk_flags":[]}
         try:result=graph.invoke(initial,config={"configurable":{"thread_id":session.thread_id}})
         finally:conn.close()
         interrupted="__interrupt__" in result; confirmation=None
@@ -48,7 +50,7 @@ class AgentService:
             preview=_safe(result["action_preview"]);confirmation=AgentConfirmation(session_id=sid,run_id=run.id,user_id=user.id,action=result["action_preview"]["action"],action_type=result["action_preview"]["action"],preview_json=preview,payload_hash=fingerprint(preview),idempotency_key=f"agent:{sid}:{rid}",expires_at=utc_now()+timedelta(minutes=settings.agent_confirmation_ttl_minutes));db.add(confirmation);db.commit();result["final_answer"]="已生成操作预览，请确认、修改或取消。";status="awaiting_confirmation"
         else:status=result.get("response_status","answered")
         session.current_intent=result.get("intent");session.current_skill=result.get("active_skill");session.follow_up_rounds=result.get("follow_up_rounds",0) if status=="need_information" else 0;db.commit();self._finish(db,run,result,status,started)
-        record_message(db,sid,"assistant",result.get("final_answer") or "请求已受理。",{"status":status,"run_id":run.id});return self._payload(result,status,confirmation)
+        record_message(db,sid,"assistant",result.get("final_answer") or "请求已受理。",{"status":status,"run_id":run.id,"product_mode":mode,"jurisdiction":result.get("jurisdiction")});return self._payload(result,status,confirmation)
     def confirmation(self,db,user,cid):
         item=db.get(AgentConfirmation,cid)
         if not item or item.user_id!=user.id:raise HTTPException(404,"确认请求不存在")

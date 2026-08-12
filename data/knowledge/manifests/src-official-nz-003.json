@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-NZ-003",
+  "source_url": "https://www.tenancy.govt.nz/maintenance-and-inspections/damage-and-repairs/what-to-do-after-a-natural-disaster/",
+  "local_path": "official/international/nz_natural_disaster_repairs.html",
+  "acquired_at": "2026-08-10T04:45:38.960060+00:00",
+  "byte_size": 101784,
+  "sha256": "404bd22426772dbb07b2b659a2a9660e1afc38fb1aefc2484298474cefed1689",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

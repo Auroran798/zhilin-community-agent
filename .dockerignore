@@ -13,7 +13,9 @@ tmp
 tmp_*
 tmp_pdf_review
 data/knowledge/chroma
+data/knowledge/chroma_beijing_v1
 data/*.db
+data/agent_checkpoints.sqlite
 *.egg-info
 artifacts/
 data/public_real/raw/

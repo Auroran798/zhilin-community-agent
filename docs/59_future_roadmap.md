@@ -1,3 +1,11 @@
 # Future roadmap
 
-First resolve any release-gate NOT_RUN status and expand browser coverage to the complete role journeys. The Stage 6 codebase now includes a disabled-by-default, audited read-only adapter contract and controlled synthetic adapter; complete partner authorization, data protection review, vendor field mapping and real-data re-evaluation before enabling any real adapter. Move to PostgreSQL/Redis/object storage only when multi-user load, retention and operational ownership demand it. Add multi-community isolation before multi-tenant use. Consider A2A only after the single-agent workflow has stable error budgets and independent safety evaluations.
+本项目按“国际公开数据驱动的完整演示与研究系统”继续建设，不设置真实物业试点、合作方接入或国内私有数据作为发布前提。阶段 6 的只读供应商适配器只作为架构样例保留，默认关闭，也不进入当前发布门槛。
+
+当前优先级：
+
+1. 修复 RAG 版本历史、地域隔离、真实多语种向量和独立评测问题。
+2. 以 NYC HPD 为主要维修/违规案例集，补充 Singapore HDB 资产主数据、UK Housing Ombudsman 投诉处理规则、HUD 检查评分，并以 Open311 作为跨城市服务请求规范。
+3. 公开业务记录只用于分类、统计、合成 Demo 和离线评测；法规与流程原文才允许成为回答证据。
+4. 完成中英文跨语种检索、来源/许可清单、数据快照校验和可复现实验报告。
+5. 仅在多用户性能确有需要时迁移 PostgreSQL/pgvector、Redis 和对象存储；A2A 仍不属于当前目标。

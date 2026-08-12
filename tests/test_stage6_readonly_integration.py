@@ -1,5 +1,6 @@
+# ruff: noqa: F811
 from api.config import settings
-from test_isolated_integration import isolated_client
+from test_isolated_integration import isolated_client  # noqa: F401,F811
 
 
 def _login(client, username):

@@ -17,6 +17,8 @@ class ExtractedFields(BaseModel):
 
 class AgentMessageIn(BaseModel):
     content: str = Field(min_length=1, max_length=2000)
+    product_mode: Literal["domestic_beijing", "international_research", "demo_garden"] = "domestic_beijing"
+    jurisdiction: str | None = Field(default=None, max_length=120)
 
 class ConfirmationIn(BaseModel):
     decision: Literal["confirm", "cancel"]

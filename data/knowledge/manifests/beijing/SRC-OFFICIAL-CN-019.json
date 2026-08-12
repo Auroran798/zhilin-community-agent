@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-019",
+  "requested_url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/gz11/202106/P020211228721655794602.pdf",
+  "retrieved_at": "2026-08-10T12:53:17.176990+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/gz11/202106/P020211228721655794602.pdf",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "www.mem.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/gz11/202106/P020211228721655794602.pdf",
+  "final_host": "www.mem.gov.cn",
+  "content_type": "application/pdf",
+  "mime_valid": true,
+  "signature": "pdf",
+  "signature_valid": true,
+  "size_bytes": 276621,
+  "sha256": "73fb470f82da2afe28b2d31a85af37633603eb72866bb8e6fbeac31f66697436",
+  "local_path": "official/china/national/src-official-cn-019.pdf"
+}

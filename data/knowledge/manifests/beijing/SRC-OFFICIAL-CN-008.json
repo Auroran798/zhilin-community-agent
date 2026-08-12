@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-008",
+  "requested_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e9e34f0731c249a891ea9c925e17f237.html",
+  "retrieved_at": "2026-08-10T12:53:14.283388+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e9e34f0731c249a891ea9c925e17f237.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "www.samr.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_e9e34f0731c249a891ea9c925e17f237.html",
+  "final_host": "www.samr.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 129160,
+  "sha256": "e5c35759f2fe448d5af9a955a2041a3d6807256c83fc100b3a5dbfadf0745060",
+  "local_path": "official/china/national/src-official-cn-008.html"
+}

@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-CN-006",
+  "source_url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/gz11/202106/P020211228721655794602.pdf",
+  "local_path": "official/china/highrise_building_fire_safety.pdf",
+  "acquired_at": "2026-08-10T04:45:38.941318+00:00",
+  "byte_size": 276621,
+  "sha256": "73fb470f82da2afe28b2d31a85af37633603eb72866bb8e6fbeac31f66697436",
+  "content_type": "application/pdf",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

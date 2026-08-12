@@ -1,0 +1,10 @@
+{
+  "data_class": "OPS_PUBLIC",
+  "title": "北京市12345市民服务热线2022年度数据报告",
+  "source_url": "https://www.beijing.gov.cn/hudong/jpzt/2022ndsjbg/index.html",
+  "period": "2022",
+  "granularity": "公开年度聚合数据",
+  "allowed_use": "仅用于问题类别和趋势研究",
+  "prohibited_use": "不得推断任何居民、房屋、工单或投诉个案事实",
+  "contains_case_records": false
+}

@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-005",
+  "requested_url": "https://bzh.scjgj.beijing.gov.cn/bzh/apifile/file/2025/20250709/88e1be81-0a3b-4193-9cae-a506c0d9874a.pdf",
+  "retrieved_at": "2026-08-10T12:53:22.878782+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://bzh.scjgj.beijing.gov.cn/bzh/apifile/file/2025/20250709/88e1be81-0a3b-4193-9cae-a506c0d9874a.pdf",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "bzh.scjgj.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://bzh.scjgj.beijing.gov.cn/bzh/apifile/file/2025/20250709/88e1be81-0a3b-4193-9cae-a506c0d9874a.pdf",
+  "final_host": "bzh.scjgj.beijing.gov.cn",
+  "content_type": "application/pdf",
+  "mime_valid": true,
+  "signature": "pdf",
+  "signature_valid": true,
+  "size_bytes": 405823,
+  "sha256": "2fddf75188ab11ba113222d69997baa85b996059a319de0f42c07286d50dae8d",
+  "local_path": "official/china/beijing/src-official-cn-bj-005.pdf"
+}

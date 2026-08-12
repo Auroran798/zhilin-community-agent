@@ -1,5 +1,4 @@
 """Stage 4 contract, safety, idempotency and observability tests."""
-from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from api.database import Base

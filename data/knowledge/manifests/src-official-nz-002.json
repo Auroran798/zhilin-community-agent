@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-NZ-002",
+  "source_url": "https://www.tenancy.govt.nz/maintenance-and-inspections/regular-maintenance/",
+  "local_path": "official/international/nz_property_maintenance.html",
+  "acquired_at": "2026-08-10T04:45:38.959122+00:00",
+  "byte_size": 93886,
+  "sha256": "ae9f3ac1b282ff05d63e760fdb486117cdb11eff7ba8bb2b1706fb94745bb5a7",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

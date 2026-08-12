@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-AU-NSW-004",
+  "source_url": "https://www.nsw.gov.au/housing-and-construction/strata/strata-complaints",
+  "local_path": "official/international/au_nsw_strata_manager_complaints.html",
+  "acquired_at": "2026-08-10T04:45:38.954413+00:00",
+  "byte_size": 152118,
+  "sha256": "d0fed50420b5f863c865af772093a029207726861a5c93feb0882d95f9c78dbc",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

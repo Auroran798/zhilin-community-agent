@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import re
 import shutil
 import subprocess
@@ -98,6 +99,8 @@ def trivy_scan(name: str, args: list[str], output: Path) -> dict:
 
 
 def bandit_scan(output: Path) -> dict:
+    if importlib.util.find_spec("bandit") is None:
+        return {"name":"bandit","status":"NOT_RUN","reason":"bandit is not installed in the active Python environment"}
     try:
         result = subprocess.run([sys.executable, "-m", "bandit", "-q", "-r", "api", "agent", "harness", "mcp_server", "-f", "json"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
     except subprocess.TimeoutExpired:
@@ -120,9 +123,14 @@ def project_dependency_audit(requirements: Path, output: Path) -> dict:
         except json.JSONDecodeError:
             pass
     try:
-        result = subprocess.run([sys.executable, "-m", "pip_audit", "-r", str(requirements), "--format", "json"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=240)
+        # pip-api shells out to ``pip --version`` and assumes UTF-8.  On
+        # Windows, a workspace path containing Chinese characters otherwise
+        # makes that child emit the active code page and pip-audit crashes
+        # before performing any audit.
+        audit_env={**os.environ,"PYTHONUTF8":"1","PYTHONIOENCODING":"utf-8"}
+        result = subprocess.run([sys.executable, "-m", "pip_audit", "-r", str(requirements), "--format", "json"], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=240,env=audit_env)
     except subprocess.TimeoutExpired:
-        return {"name": "pip-audit-direct-project-dependencies", "status": "NOT_RUN", "reason": "pip-audit timed out after 150 seconds"}
+        return {"name": "pip-audit-resolved-runtime", "status": "NOT_RUN", "reason": "pip-audit timed out after 240 seconds"}
     raw = output.with_name("pip_audit_resolver_output.json")
     raw.parent.mkdir(parents=True, exist_ok=True); raw.write_text(result.stdout + "\n" + result.stderr, encoding="utf-8")
     try:
@@ -131,7 +139,7 @@ def project_dependency_audit(requirements: Path, output: Path) -> dict:
         output.write_text(json.dumps({"scope": "fully resolved deployable dependency graph", "findings": findings}, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"name": "pip-audit-resolved-runtime", "status": "PASS" if not findings else "FAIL", "findings": sum(len(item["vulns"]) for item in findings), "report": str(output.relative_to(ROOT)), "resolver_report": str(raw.relative_to(ROOT))}
     except json.JSONDecodeError:
-        return {"name": "pip-audit-resolved-runtime", "status": "NOT_RUN", "reason": "could not parse resolver audit output"}
+        return {"name": "pip-audit-resolved-runtime", "status": "NOT_RUN", "reason": f"could not parse resolver audit output (returncode={result.returncode}); inspect {raw.relative_to(ROOT)}"}
 
 
 def image_sbom(image: str, output: Path) -> dict:

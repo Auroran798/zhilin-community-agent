@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-019",
+  "requested_url": "https://www.beijing.gov.cn/zhengce/dfxfg/202504/t20250428_4076471.html",
+  "retrieved_at": "2026-08-10T12:53:29.013567+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://www.beijing.gov.cn/zhengce/dfxfg/202504/t20250428_4076471.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "www.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://www.beijing.gov.cn/zhengce/dfxfg/202504/t20250428_4076471.html",
+  "final_host": "www.beijing.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 82975,
+  "sha256": "dd34b65817d71dbd47863607559dd2edd2b37e1b480bb2dcc154fa99f3635bf6",
+  "local_path": "official/china/beijing/src-official-cn-bj-019.html"
+}

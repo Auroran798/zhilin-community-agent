@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-GB-001",
+  "source_url": "https://www.housing-ombudsman.org.uk/app/uploads/2024/09/03.Complaint-Handling-Code-24.pdf",
+  "local_path": "official/international/gb_complaint_handling_code_2024.pdf",
+  "acquired_at": "2026-08-10T04:45:38.938781+00:00",
+  "byte_size": 898010,
+  "sha256": "4b25bd4f4c5f1ad878627fdb45d73bcb4d43dec516fa0155786221eb99086eab",
+  "content_type": "application/pdf",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

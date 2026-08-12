@@ -1,7 +1,7 @@
 """Explicit, auditable adapters to Stage 1/2 services; no internal HTTP callbacks."""
 from __future__ import annotations
-import json, time
-from datetime import datetime, timedelta
+import json, re, time
+from datetime import timedelta
 from decimal import Decimal
 from typing import Any
 from fastapi import HTTPException
@@ -14,12 +14,47 @@ from api.schemas import WorkOrderIn
 from api.services import WorkOrderService, audit, number
 from api.time import utc_now
 from api.idempotency import claim as claim_idempotency, complete as complete_idempotency, storage_key as idempotency_storage_key, fingerprint
-from api.stage7 import AnnouncementService, AssignmentService, BillingService, EquipmentService, InspectionService, SLAService, notify
+from api.stage7 import AnnouncementService, AssignmentService
 from rag.service import search
 from skills.announcement import draft as announcement_draft
 from skills.billing import compare as compare_bill
 
 WRITE_ACTIONS={"create_work_order","cancel_work_order","rate_work_order","create_bill_review","create_announcement_draft","submit_announcement_review","submit_inspection_record","create_rectification"}
+
+JURISDICTION_HINTS=(
+    ("GB",("united kingdom","england","british","uk","housing ombudsman","complaint handling code","英国","英格兰","住房申诉专员")),
+    ("US-NY-NYC",("new york city","new york","nyc","纽约")),
+    ("SG",("singapore","hdb","新加坡")),
+    ("AU-NSW",("new south wales","nsw fair trading","nsw","新南威尔士")),
+    ("AU-VIC",("victoria australia","consumer affairs victoria","victorian renter","维多利亚州")),
+    ("NZ",("new zealand","tenancy services","新西兰")),
+    ("北京市",("北京","beijing","db11/t 751")),
+    ("上海市",("上海","shanghai")),
+    ("GLOBAL",("open311","georeport")),
+    ("Demo Garden",("demo garden","智邻花园")),
+    ("全国",("中国法规","国家规定","全国规定","国务院","住房和城乡建设部")),
+)
+
+
+def infer_jurisdiction(text:str,fields:dict|None=None)->str|None:
+    explicit=str((fields or {}).get("jurisdiction") or "").strip()
+    allowed={value for value,_ in JURISDICTION_HINTS}
+    if explicit in allowed:return explicit
+    lowered=text.lower()
+    def mentioned(hint:str)->bool:
+        hint=hint.lower()
+        if re.fullmatch(r"[a-z0-9 -]+",hint): return bool(re.search(rf"(?<![a-z0-9]){re.escape(hint)}(?![a-z0-9])",lowered))
+        return hint in lowered
+    return next((value for value,hints in JURISDICTION_HINTS if any(mentioned(hint) for hint in hints)),None)
+
+
+def infer_product_mode(text:str,fields:dict|None=None)->str:
+    explicit=str((fields or {}).get("product_mode") or "").strip()
+    if explicit in {"domestic_beijing","international_research","demo_garden"}: return explicit
+    jurisdiction=infer_jurisdiction(text,fields)
+    if jurisdiction in {"GB","US-NY-NYC","SG","AU-NSW","AU-VIC","NZ","GLOBAL"}: return "international_research"
+    if jurisdiction=="Demo Garden": return "demo_garden"
+    return "domestic_beijing"
 
 class CreateWorkOrderArgs(BaseModel):
     property_id:str; summary:str=Field(min_length=2,max_length=500); category:str; location_description:str=Field(min_length=2,max_length=200); fault_description:str=Field(min_length=2,max_length=2000)
@@ -79,25 +114,28 @@ def read_tool_raw(db:Session,user:User,intent:str,fields:dict,text:str):
         audit(db,user,"agent_list_external_work_orders","external_work_order",None,request_id="stage6-readonly-agent")
         db.commit()
         return {"tool":"list_external_work_orders","result":{"items":[item.model_dump(mode="json") for item in items],"total":total,"mode":"read_only"}}
-    if intent=="knowledge_question": return {"tool":"query_rag","result":search(db,text,user,prop.community_name if prop else None)}
+    if intent=="knowledge_question":
+        jurisdiction=infer_jurisdiction(text,fields)
+        mode=infer_product_mode(text,fields)
+        return {"tool":"query_rag","result":search(db,text,user,prop.community_name if prop else None,jurisdiction=jurisdiction,product_mode=mode)}
     if intent in {"work_order_query","work_order_rating"}:
         q=db.query(WorkOrder)
         if user.role=="resident": q=q.filter_by(requester_id=user.id)
         elif user.role=="maintenance": q=q.filter_by(assignee_id=user.id)
-        return {"tool":"list_work_orders","result":{"items":[{"id":x.id,"work_order_no":x.work_order_no,"status":x.status,"summary":x.summary,"priority":x.priority} for x in q.order_by(WorkOrder.created_at.desc()).limit(20)]}}
+        return {"tool":"list_work_orders","result":{"product_mode":"demo_garden","data_class":"DEMO_SYNTHETIC","items":[{"id":x.id,"work_order_no":x.work_order_no,"status":x.status,"summary":x.summary,"priority":x.priority,"synthetic":x.source_type=="synthetic"} for x in q.order_by(WorkOrder.created_at.desc()).limit(20)]}}
     if intent in {"bill_query","bill_explanation"}:
         q=db.query(Bill)
         if user.role=="resident": q=q.filter_by(property_id=prop.id) if prop else q.filter(False)
         items=[]
         for x in q.order_by(Bill.billing_period.desc()).limit(24):
             paid=sum((p.amount for p in db.query(PaymentRecord).filter_by(bill_id=x.id)),Decimal("0"));items.append({"id":x.id,"bill_no":x.bill_no,"billing_period":x.billing_period,"amount":str(x.amount),"paid_amount":str(paid),"balance":str(Decimal(x.amount)-paid),"status":x.status})
-        result={"items":items}
+        result={"product_mode":"demo_garden","data_class":"DEMO_SYNTHETIC","items":items}
         if intent=="bill_explanation":
             if len(items)<2:
                 result.update({"explanation_status":"insufficient_data","message":"当前没有足够的连续账单，无法可靠比较。可申请费用核查。","offer_review":True})
             else:
                 current,previous=items[0],items[1];comparison=compare_bill(Decimal(current["amount"]),Decimal(previous["amount"]))
-                evidence=search(db,"物业费 收费说明 计费规则",user,prop.community_name if prop else None)
+                evidence=search(db,"北京当前小区物业费 收费说明 计费规则",user,prop.community_name if prop else None,jurisdiction=prop.community_name if prop else "Demo Garden",product_mode="demo_garden")
                 result.update({"comparison":comparison,"explanation_status":"explained" if evidence.get("answer_status")=="answered" else "insufficient_basis","rule_answer":evidence.get("answer"),"citations":evidence.get("citations",[]),"offer_review":evidence.get("answer_status")!="answered"})
         return {"tool":"get_bill_bundle","result":result}
     if intent=="announcement_query":

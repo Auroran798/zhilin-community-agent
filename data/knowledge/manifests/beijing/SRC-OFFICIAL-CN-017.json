@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-017",
+  "requested_url": "https://www.gov.cn/zhengce/zhengceku/202306/content_6885666.htm",
+  "retrieved_at": "2026-08-10T12:53:17.131559+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://www.gov.cn/zhengce/zhengceku/202306/content_6885666.htm",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "www.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://www.gov.cn/zhengce/zhengceku/202306/content_6885666.htm",
+  "final_host": "www.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 38623,
+  "sha256": "3e244becfb212b037a6d8d8cace3b1c29c91d490a5a6d8e1e8204c5a81bc3255",
+  "local_path": "official/china/national/src-official-cn-017.html"
+}

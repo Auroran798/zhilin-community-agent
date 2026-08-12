@@ -3,7 +3,7 @@
 ```json
 {
   "status": "PASS",
-  "generated_at": "2026-08-09T14:08:55.854232+00:00",
+  "generated_at": "2026-08-10T14:36:14.555174+00:00",
   "checks": [
     {
       "name": "secret-pattern",
@@ -34,8 +34,8 @@
       "name": "trivy-vulnerability-db",
       "status": "PASS",
       "source": "cached",
-      "age_hours": 60.1,
-      "update_warning": "rror\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"https://mirror.gcr.io/v2/\": dial tcp 142.250.99.82:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.\n\n\n"
+      "age_hours": 84.6,
+      "update_warning": "ror\trun error: init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: OCI repository error: 1 error occurred:\n\t* Get \"https://mirror.gcr.io/v2/\": dial tcp 142.251.188.82:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.\n\n\n"
     },
     {
       "name": "trivy-fs-config-and-secrets",

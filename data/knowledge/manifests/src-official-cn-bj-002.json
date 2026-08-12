@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-CN-BJ-002",
+  "source_url": "https://bzh.scjgj.beijing.gov.cn/bzh/apifile/file/2025/20250709/88e1be81-0a3b-4193-9cae-a506c0d9874a.pdf",
+  "local_path": "official/china/beijing_residential_property_service_standard_2025.pdf",
+  "acquired_at": "2026-08-10T04:45:38.943877+00:00",
+  "byte_size": 405823,
+  "sha256": "2fddf75188ab11ba113222d69997baa85b996059a319de0f42c07286d50dae8d",
+  "content_type": "application/pdf",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

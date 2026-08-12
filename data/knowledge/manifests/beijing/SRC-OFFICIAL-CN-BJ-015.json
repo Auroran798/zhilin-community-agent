@@ -1,0 +1,22 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-015",
+  "requested_url": "https://zjw.beijing.gov.cn/bjjs/fwgl/wyglxx/wyglxx/53592936/2020010313585259864.pdf",
+  "retrieved_at": "2026-08-10T12:53:28.924717+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://zjw.beijing.gov.cn/bjjs/fwgl/wyglxx/wyglxx/53592936/2020010313585259864.pdf",
+      "status_code": 404
+    }
+  ],
+  "allowed_host": "zjw.beijing.gov.cn",
+  "status": "failed",
+  "error": "HTTPStatusError: Client error '404 Not Found' for url 'https://zjw.beijing.gov.cn/bjjs/fwgl/wyglxx/wyglxx/53592936/2020010313585259864.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+  "final_url": "https://zjw.beijing.gov.cn/bjjs/fwgl/wyglxx/wyglxx/53592936/2020010313585259864.pdf",
+  "content_type": "",
+  "mime_valid": false,
+  "signature_valid": false,
+  "size_bytes": 0,
+  "sha256": "",
+  "local_path": "official/china/beijing/src-official-cn-bj-015.pdf"
+}

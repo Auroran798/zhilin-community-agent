@@ -1,11 +1,39 @@
 {
+  "quality_profile": {
+    "mode": "offline_fallback",
+    "semantic_embedding": false,
+    "external_reranker": false,
+    "query_expansion": "governed_bilingual_glossary_v1",
+    "formal_quality_claim_allowed": false
+  },
+  "formal_evaluation": false,
+  "datasets": [
+    "dataset.jsonl",
+    "multilingual_official_dataset.jsonl"
+  ],
+  "gate": {
+    "status": "NOT_FORMAL",
+    "reason": "Formal claims require a real multilingual embedding, external reranker, and at least 500 independently reviewed cases.",
+    "thresholds": {
+      "recall_at_5": 0.92,
+      "mrr_at_5": 0.85,
+      "citation_source_accuracy": 0.98,
+      "refusal_f1": 0.95,
+      "jurisdiction_leakage_count": 0
+    }
+  },
   "metrics": {
-    "case_count": 84,
+    "case_count": 128,
     "recall_at_5": 1.0,
+    "mrr_at_5": 0.9153,
+    "citation_source_accuracy": 1.0,
     "citation_completeness": 1.0,
-    "safe_refusal_accuracy": 1.0,
-    "latency_avg_ms": 88.14,
-    "latency_p95_ms": 89
+    "refusal_precision": 1.0,
+    "refusal_recall": 1.0,
+    "refusal_f1": 1.0,
+    "jurisdiction_leakage_count": 0,
+    "latency_avg_ms": 469.44,
+    "latency_p95_ms": 774
   },
   "results": [
     {
@@ -15,10 +43,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 1274
+      "jurisdiction_leakage": false,
+      "latency_ms": 1503
     },
     {
       "id": "pos-002",
@@ -27,10 +67,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 320
     },
     {
       "id": "pos-003",
@@ -39,10 +91,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
       "matched": true,
+      "cited_titles": [
+        "中华人民共和国民法典",
+        "物业管理条例",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 72
+      "jurisdiction_leakage": false,
+      "latency_ms": 324
     },
     {
       "id": "pos-004",
@@ -51,10 +115,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "物业服务收费明码标价规定"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 390
     },
     {
       "id": "pos-005",
@@ -63,10 +139,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 301
     },
     {
       "id": "pos-006",
@@ -75,10 +163,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 319
     },
     {
       "id": "pos-007",
@@ -87,10 +187,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "物业服务收费明码标价规定",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 432
     },
     {
       "id": "pos-008",
@@ -99,10 +211,22 @@
       "expected_title": "物业管理条例",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "全国",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "物业服务收费管理办法",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "物业服务收费明码标价规定"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 323
     },
     {
       "id": "pos-009",
@@ -111,10 +235,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市住宅区业主管理规约示范文本"
+      ],
       "citation_complete": true,
-      "latency_ms": 71
+      "jurisdiction_leakage": false,
+      "latency_ms": 652
     },
     {
       "id": "pos-010",
@@ -123,10 +259,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "北京市住宅区业主管理规约示范文本",
+        "智邻花园安全应急与联系人手册（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 638
     },
     {
       "id": "pos-011",
@@ -135,10 +283,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 766
     },
     {
       "id": "pos-012",
@@ -147,10 +307,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 78
+      "jurisdiction_leakage": false,
+      "latency_ms": 658
     },
     {
       "id": "pos-013",
@@ -159,10 +331,22 @@
       "expected_title": "智邻花园装修管理规定（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "住宅室内装饰装修管理办法（官方PDF）",
+        "中华人民共和国民法典",
+        "北京市养犬管理规定",
+        "关于进一步加强城市房屋室内装饰装修安全管理的通知"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 591
     },
     {
       "id": "pos-014",
@@ -171,10 +355,22 @@
       "expected_title": "智邻花园装修管理规定（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "中华人民共和国民法典",
+        "住宅室内装饰装修管理办法（官方PDF）",
+        "物业管理条例",
+        "北京市养犬管理规定"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 741
     },
     {
       "id": "pos-015",
@@ -183,10 +379,22 @@
       "expected_title": "智邻花园装修管理规定（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 76
+      "jurisdiction_leakage": false,
+      "latency_ms": 662
     },
     {
       "id": "pos-016",
@@ -195,10 +403,22 @@
       "expected_title": "智邻花园装修管理规定（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "北京市电梯困人处置工作流程",
+        "中华人民共和国民法典",
+        "北京市物业管理条例（2024年修正）",
+        "物业管理条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 674
     },
     {
       "id": "pos-017",
@@ -207,10 +427,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "特种设备安全监察条例",
+        "北京市物业管理条例（2024年修正）",
+        "北京市燃气管理条例",
+        "中华人民共和国特种设备安全法"
+      ],
       "citation_complete": true,
-      "latency_ms": 72
+      "jurisdiction_leakage": false,
+      "latency_ms": 588
     },
     {
       "id": "pos-018",
@@ -219,10 +451,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "北京市物业管理条例（2024年修正）",
+        "特种设备安全监察条例",
+        "北京市燃气管理条例",
+        "中华人民共和国特种设备安全法"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 718
     },
     {
       "id": "pos-019",
@@ -231,10 +475,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 84
+      "jurisdiction_leakage": false,
+      "latency_ms": 659
     },
     {
       "id": "pos-020",
@@ -243,10 +499,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "北京市禁止违法建设若干规定",
+        "北京市燃气管理条例",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "中华人民共和国特种设备安全法"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 718
     },
     {
       "id": "pos-021",
@@ -255,10 +523,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "城镇燃气管理条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 665
     },
     {
       "id": "pos-022",
@@ -267,10 +547,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市物业服务收费明码标价通知"
+      ],
       "citation_complete": true,
-      "latency_ms": 96
+      "jurisdiction_leakage": false,
+      "latency_ms": 626
     },
     {
       "id": "pos-023",
@@ -279,10 +571,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 659
     },
     {
       "id": "pos-024",
@@ -291,10 +595,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 733
     },
     {
       "id": "pos-025",
@@ -303,10 +619,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "中华人民共和国民法典",
+        "北京市物业管理条例（2024年修正）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "《北京市物业管理条例》官方解读"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 562
     },
     {
       "id": "pos-026",
@@ -315,10 +643,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "中华人民共和国民法典",
+        "北京市物业管理条例（2024年修正）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "《北京市物业管理条例》官方解读"
+      ],
       "citation_complete": true,
-      "latency_ms": 71
+      "jurisdiction_leakage": false,
+      "latency_ms": 612
     },
     {
       "id": "pos-027",
@@ -327,10 +667,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 751
     },
     {
       "id": "pos-028",
@@ -339,10 +691,22 @@
       "expected_title": "智邻花园物业收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "北京市电梯困人处置工作流程"
+      ],
       "citation_complete": true,
-      "latency_ms": 72
+      "jurisdiction_leakage": false,
+      "latency_ms": 598
     },
     {
       "id": "pos-029",
@@ -351,10 +715,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "北京市机动车停车条例",
+        "北京市市容环境卫生条例",
+        "物业服务收费管理办法"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 585
     },
     {
       "id": "pos-030",
@@ -363,10 +739,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "北京市市容环境卫生条例",
+        "北京市机动车停车条例",
+        "物业服务收费管理办法"
+      ],
       "citation_complete": true,
-      "latency_ms": 97
+      "jurisdiction_leakage": false,
+      "latency_ms": 722
     },
     {
       "id": "pos-031",
@@ -375,10 +763,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 622
     },
     {
       "id": "pos-032",
@@ -387,10 +787,22 @@
       "expected_title": "智邻花园停车管理与收费说明（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "北京市机动车停车条例",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 624
     },
     {
       "id": "pos-033",
@@ -399,10 +811,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "北京市市容环境卫生条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 600
     },
     {
       "id": "pos-034",
@@ -411,10 +835,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "北京市市容环境卫生条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 758
     },
     {
       "id": "pos-035",
@@ -423,10 +859,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 623
     },
     {
       "id": "pos-036",
@@ -435,10 +883,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "城镇住宅专项维修资金应急使用审核办事指南",
+        "北京市市容环境卫生条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 82
+      "jurisdiction_leakage": false,
+      "latency_ms": 646
     },
     {
       "id": "pos-037",
@@ -447,10 +907,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "中华人民共和国民法典",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 657
     },
     {
       "id": "pos-038",
@@ -459,10 +931,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "中华人民共和国民法典",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
       "citation_complete": true,
-      "latency_ms": 85
+      "jurisdiction_leakage": false,
+      "latency_ms": 592
     },
     {
       "id": "pos-039",
@@ -471,10 +955,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 78
+      "jurisdiction_leakage": false,
+      "latency_ms": 634
     },
     {
       "id": "pos-040",
@@ -483,10 +979,22 @@
       "expected_title": "智邻花园管理规约与公共区域管理制度（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "北京市接诉即办改革工作实施意见",
+        "北京市禁止违法建设若干规定",
+        "智邻花园装修管理规定（虚拟示例）",
+        "特种设备安全监察条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 700
     },
     {
       "id": "pos-041",
@@ -495,10 +1003,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 4,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市消防条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 99
+      "jurisdiction_leakage": false,
+      "latency_ms": 557
     },
     {
       "id": "pos-042",
@@ -507,10 +1027,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 4,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市消防条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 613
     },
     {
       "id": "pos-043",
@@ -519,10 +1051,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 3,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 744
     },
     {
       "id": "pos-044",
@@ -531,10 +1075,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 4,
       "matched": true,
+      "cited_titles": [
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市电梯困人处置工作流程"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 613
     },
     {
       "id": "pos-045",
@@ -543,10 +1099,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市电梯安全监督管理办法",
+        "北京市电梯困人处置工作流程",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "特种设备安全监察条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 584
     },
     {
       "id": "pos-046",
@@ -555,10 +1123,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市电梯安全监督管理办法",
+        "北京市电梯困人处置工作流程",
+        "DB11/T 751-2025 住宅物业服务标准",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 703
     },
     {
       "id": "pos-047",
@@ -567,10 +1147,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 83
+      "jurisdiction_leakage": false,
+      "latency_ms": 635
     },
     {
       "id": "pos-048",
@@ -579,10 +1171,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市居民用户燃气安全巡检工作规范",
+        "智邻花园装修管理规定（虚拟示例）",
+        "北京市电梯困人处置工作流程",
+        "特种设备安全监察条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 75
+      "jurisdiction_leakage": false,
+      "latency_ms": 619
     },
     {
       "id": "pos-049",
@@ -591,10 +1195,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市消防条例",
+        "中华人民共和国消防法",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "北京市火灾事故应急救援预案（2024年修订）"
+      ],
       "citation_complete": true,
-      "latency_ms": 111
+      "jurisdiction_leakage": false,
+      "latency_ms": 631
     },
     {
       "id": "pos-050",
@@ -603,10 +1219,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市消防条例",
+        "中华人民共和国消防法",
+        "北京市火灾事故应急救援预案（2024年修订）",
+        "高层民用建筑消防安全管理规定（官方PDF）"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 707
     },
     {
       "id": "pos-051",
@@ -615,10 +1243,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 4,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 651
     },
     {
       "id": "pos-052",
@@ -627,10 +1267,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市消防条例",
+        "中华人民共和国消防法",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 650
     },
     {
       "id": "pos-053",
@@ -639,10 +1291,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市燃气管理条例",
+        "北京市物业管理委员会组建办法",
+        "《北京市物业管理条例》官方解读",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 69
+      "jurisdiction_leakage": false,
+      "latency_ms": 673
     },
     {
       "id": "pos-054",
@@ -651,10 +1315,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "城镇燃气管理条例",
+        "北京市燃气管理条例",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "《北京市物业管理条例》官方解读"
+      ],
       "citation_complete": true,
-      "latency_ms": 70
+      "jurisdiction_leakage": false,
+      "latency_ms": 601
     },
     {
       "id": "pos-055",
@@ -663,10 +1339,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 640
     },
     {
       "id": "pos-056",
@@ -675,10 +1363,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市禁止违法建设若干规定",
+        "北京市居民用户燃气安全巡检工作规范",
+        "智邻花园装修管理规定（虚拟示例）",
+        "北京市电梯困人处置工作流程"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 733
     },
     {
       "id": "pos-057",
@@ -687,10 +1387,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "中华人民共和国民法典",
+        "住宅室内装饰装修管理办法（官方PDF）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "物业管理条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 76
+      "jurisdiction_leakage": false,
+      "latency_ms": 578
     },
     {
       "id": "pos-058",
@@ -699,10 +1411,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "中华人民共和国民法典",
+        "住宅室内装饰装修管理办法（官方PDF）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 79
+      "jurisdiction_leakage": false,
+      "latency_ms": 622
     },
     {
       "id": "pos-059",
@@ -711,10 +1435,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 76
+      "jurisdiction_leakage": false,
+      "latency_ms": 776
     },
     {
       "id": "pos-060",
@@ -723,10 +1459,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市禁止违法建设若干规定",
+        "智邻花园装修管理规定（虚拟示例）",
+        "北京市电梯困人处置工作流程",
+        "北京市居民用户燃气安全巡检工作规范"
+      ],
       "citation_complete": true,
-      "latency_ms": 83
+      "jurisdiction_leakage": false,
+      "latency_ms": 623
     },
     {
       "id": "pos-061",
@@ -735,10 +1483,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市机动车停车条例",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "北京市物业管理条例（2024年修正）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 66
+      "jurisdiction_leakage": false,
+      "latency_ms": 587
     },
     {
       "id": "pos-062",
@@ -747,10 +1507,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市机动车停车条例",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "北京市物业管理条例（2024年修正）"
+      ],
       "citation_complete": true,
-      "latency_ms": 73
+      "jurisdiction_leakage": false,
+      "latency_ms": 625
     },
     {
       "id": "pos-063",
@@ -759,10 +1531,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 70
+      "jurisdiction_leakage": false,
+      "latency_ms": 774
     },
     {
       "id": "pos-064",
@@ -771,10 +1555,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "北京市禁止违法建设若干规定",
+        "北京市电梯困人处置工作流程",
+        "北京市居民用户燃气安全巡检工作规范"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 637
     },
     {
       "id": "pos-065",
@@ -783,10 +1579,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "北京市防汛应急预案（2025年修订）",
+        "北京市雪雾低温天气应急预案"
+      ],
       "citation_complete": true,
-      "latency_ms": 70
+      "jurisdiction_leakage": false,
+      "latency_ms": 622
     },
     {
       "id": "pos-066",
@@ -795,10 +1603,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "北京市防汛应急预案（2025年修订）",
+        "北京市雪雾低温天气应急预案"
+      ],
       "citation_complete": true,
-      "latency_ms": 89
+      "jurisdiction_leakage": false,
+      "latency_ms": 780
     },
     {
       "id": "pos-067",
@@ -807,10 +1627,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 691
     },
     {
       "id": "pos-068",
@@ -819,10 +1651,22 @@
       "expected_title": "智邻花园安全应急与联系人手册（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "北京市居民用户燃气安全巡检工作规范",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 78
+      "jurisdiction_leakage": false,
+      "latency_ms": 659
     },
     {
       "id": "pos-069",
@@ -831,10 +1675,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "物业管理条例",
+        "DB11/T 751-2025 住宅物业服务标准"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 707
     },
     {
       "id": "pos-070",
@@ -843,10 +1699,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "物业管理条例",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "Synthetic notice 6"
+      ],
       "citation_complete": true,
-      "latency_ms": 81
+      "jurisdiction_leakage": false,
+      "latency_ms": 779
     },
     {
       "id": "pos-071",
@@ -855,10 +1723,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
       "matched": true,
+      "cited_titles": [
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 78
+      "jurisdiction_leakage": false,
+      "latency_ms": 665
     },
     {
       "id": "pos-072",
@@ -867,10 +1747,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "物业服务收费管理办法",
+        "北京市电梯困人处置工作流程"
+      ],
       "citation_complete": true,
-      "latency_ms": 80
+      "jurisdiction_leakage": false,
+      "latency_ms": 836
     },
     {
       "id": "pos-073",
@@ -879,10 +1771,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
       "citation_complete": true,
-      "latency_ms": 72
+      "jurisdiction_leakage": false,
+      "latency_ms": 596
     },
     {
       "id": "pos-074",
@@ -891,10 +1795,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
       "citation_complete": true,
-      "latency_ms": 77
+      "jurisdiction_leakage": false,
+      "latency_ms": 659
     },
     {
       "id": "pos-075",
@@ -903,10 +1819,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 661
     },
     {
       "id": "pos-076",
@@ -915,10 +1843,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
       "citation_complete": true,
-      "latency_ms": 78
+      "jurisdiction_leakage": false,
+      "latency_ms": 822
     },
     {
       "id": "pos-077",
@@ -927,10 +1867,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "北京市供热采暖管理办法",
+        "北京市物业管理条例（2024年修正）"
+      ],
       "citation_complete": true,
-      "latency_ms": 70
+      "jurisdiction_leakage": false,
+      "latency_ms": 584
     },
     {
       "id": "pos-078",
@@ -939,10 +1891,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见",
+        "北京市供热采暖管理办法",
+        "北京市燃气管理条例"
+      ],
       "citation_complete": true,
-      "latency_ms": 76
+      "jurisdiction_leakage": false,
+      "latency_ms": 646
     },
     {
       "id": "pos-079",
@@ -951,10 +1915,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园管理规约与公共区域管理制度（虚拟示例）",
+        "智邻花园停车管理与收费说明（虚拟示例）",
+        "智邻花园装修管理规定（虚拟示例）",
+        "智邻花园安全应急与联系人手册（虚拟示例）"
+      ],
       "citation_complete": true,
-      "latency_ms": 76
+      "jurisdiction_leakage": false,
+      "latency_ms": 732
     },
     {
       "id": "pos-080",
@@ -963,10 +1939,22 @@
       "expected_title": "智邻花园物业服务与报修投诉流程（虚拟示例）",
       "expected_status": "answered",
       "scope": "Demo Garden",
+      "jurisdiction": "Demo Garden",
       "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
       "matched": true,
+      "cited_titles": [
+        "智邻花园物业服务与报修投诉流程（虚拟示例）",
+        "智邻花园物业收费说明（虚拟示例）",
+        "北京市居民用户燃气安全巡检工作规范",
+        "智邻花园装修管理规定（虚拟示例）",
+        "北京市供热采暖管理办法"
+      ],
       "citation_complete": true,
-      "latency_ms": 74
+      "jurisdiction_leakage": false,
+      "latency_ms": 647
     },
     {
       "id": "neg-081",
@@ -975,9 +1963,15 @@
       "expected_title": null,
       "expected_status": "refused",
       "scope": "Demo Garden",
+      "jurisdiction": null,
       "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
       "matched": null,
+      "cited_titles": [],
       "citation_complete": true,
+      "jurisdiction_leakage": false,
       "latency_ms": 0
     },
     {
@@ -987,9 +1981,15 @@
       "expected_title": null,
       "expected_status": "refused",
       "scope": "Demo Garden",
+      "jurisdiction": null,
       "actual_status": "blocked",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
       "matched": null,
+      "cited_titles": [],
       "citation_complete": true,
+      "jurisdiction_leakage": false,
       "latency_ms": 0
     },
     {
@@ -999,9 +1999,15 @@
       "expected_title": null,
       "expected_status": "refused",
       "scope": "Demo Garden",
+      "jurisdiction": null,
       "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
       "matched": null,
+      "cited_titles": [],
       "citation_complete": true,
+      "jurisdiction_leakage": false,
       "latency_ms": 1
     },
     {
@@ -1011,9 +2017,1003 @@
       "expected_title": null,
       "expected_status": "refused",
       "scope": "Demo Garden",
+      "jurisdiction": null,
       "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
       "matched": null,
+      "cited_titles": [],
       "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 0
+    },
+    {
+      "id": "official-bj-001",
+      "category": "北京物业报修",
+      "query": "北京住宅物业接到急修信息后应在多长时间到现场？",
+      "expected_title": "DB11/T 751-2025 住宅物业服务标准",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "DB11/T 751-2025 住宅物业服务标准",
+        "住宅室内装饰装修管理办法（官方PDF）",
+        "北京市电梯困人处置工作流程",
+        "北京市供热突发事件应急预案（2024年版）",
+        "北京市物业管理条例（2024年修正）"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 668
+    },
+    {
+      "id": "official-bj-002",
+      "category": "北京投诉管理",
+      "query": "北京市住宅物业受理投诉后要保存哪些记录？",
+      "expected_title": "DB11/T 751-2025 住宅物业服务标准",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "DB11/T 751-2025 住宅物业服务标准",
+        "北京市住宅区业主管理规约示范文本",
+        "北京市电梯安全监督管理办法",
+        "北京市物业管理条例（2024年修正）",
+        "北京市住宅专项维修资金管理办法"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 744
+    },
+    {
+      "id": "official-bj-003",
+      "category": "北京物业报修",
+      "query": "北京物业是否应建立24小时报修受理渠道？",
+      "expected_title": "DB11/T 751-2025 住宅物业服务标准",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 3,
+      "matched": true,
+      "cited_titles": [
+        "北京市接诉即办改革工作实施意见",
+        "北京市供热采暖管理办法",
+        "DB11/T 751-2025 住宅物业服务标准",
+        "北京市防汛应急预案（2025年修订）",
+        "关于推动12345政务服务便民热线与110报警服务台高效对接联动的意见"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 636
+    },
+    {
+      "id": "official-bj-004",
+      "category": "北京消防",
+      "query": "北京物业管理区域的消防安全责任如何落实？",
+      "expected_title": "北京市物业管理区域内消防安全管理规定相关通知",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "北京市物业管理区域内消防安全管理规定相关通知",
+        "北京市消防条例",
+        "北京市物业管理条例（2024年修正）",
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "中华人民共和国消防法"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 647
+    },
+    {
+      "id": "official-bj-005",
+      "category": "Beijing property service",
+      "query": "What records should a Beijing residential property service keep for complaints and repairs?",
+      "expected_title": "DB11/T 751-2025 住宅物业服务标准",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "DB11/T 751-2025 住宅物业服务标准",
+        "北京市燃气管理条例",
+        "北京市市容环境卫生条例",
+        "北京市物业管理条例（2024年修正）",
+        "北京市物业管理区域内消防安全管理规定相关通知"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 851
+    },
+    {
+      "id": "official-bj-006",
+      "category": "Beijing fire safety",
+      "query": "What fire-safety duties apply in Beijing residential property management areas?",
+      "expected_title": "北京市物业管理区域内消防安全管理规定相关通知",
+      "expected_status": "answered",
+      "jurisdiction": "北京市",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
+      "matched": true,
+      "cited_titles": [
+        "DB11/T 751-2025 住宅物业服务标准",
+        "北京市物业管理区域内消防安全管理规定相关通知",
+        "北京市物业服务合同示范文本",
+        "北京市突发事件总体应急预案（2021年修订）",
+        "城镇住宅专项维修资金应急使用审核办事指南"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 590
+    },
+    {
+      "id": "official-cn-001",
+      "category": "高层住宅消防",
+      "query": "高层住宅物业服务企业依法承担哪些消防安全职责？",
+      "expected_title": "高层民用建筑消防安全管理规定（官方PDF）",
+      "expected_status": "answered",
+      "jurisdiction": "全国",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "中华人民共和国消防法",
+        "住宅专项维修资金管理办法"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 308
+    },
+    {
+      "id": "official-cn-002",
+      "category": "高层住宅消防",
+      "query": "高层住宅的疏散通道和消防设施应由谁维护管理？",
+      "expected_title": "高层民用建筑消防安全管理规定（官方PDF）",
+      "expected_status": "answered",
+      "jurisdiction": "全国",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "中华人民共和国消防法",
+        "住宅专项维修资金管理办法",
+        "住宅专项维修资金管理办法",
+        "住宅室内装饰装修管理办法（官方PDF）"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 319
+    },
+    {
+      "id": "official-cn-003",
+      "category": "China high-rise fire safety",
+      "query": "What duties does a property service company have for fire safety in a Chinese high-rise residential building?",
+      "expected_title": "高层民用建筑消防安全管理规定（官方PDF）",
+      "expected_status": "answered",
+      "jurisdiction": "全国",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "中华人民共和国消防法",
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "住宅专项维修资金管理办法"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 394
+    },
+    {
+      "id": "official-cn-004",
+      "category": "China high-rise fire safety",
+      "query": "Under China's high-rise civil building fire-safety rule what must owners and users do?",
+      "expected_title": "高层民用建筑消防安全管理规定（官方PDF）",
+      "expected_status": "answered",
+      "jurisdiction": "全国",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "高层民用建筑消防安全管理规定（官方PDF）",
+        "中华人民共和国消防法",
+        "物业管理条例",
+        "中华人民共和国民法典",
+        "住宅专项维修资金管理办法"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 381
+    },
+    {
+      "id": "official-gb-001",
+      "category": "Awaab's Law",
+      "query": "What repair and investigation timeframes are described in Awaab's Law guidance?",
+      "expected_title": "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "Complaint Handling Code 2024",
+        "Follow-up Spotlight report on damp and mould",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Social housing complaints: Make Things Right"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 206
+    },
+    {
+      "id": "official-gb-002",
+      "category": "英国维修时限",
+      "query": "英国社会住房的危险和霉菌维修时限如何规定？",
+      "expected_title": "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "Follow-up Spotlight report on damp and mould",
+        "Complaint Handling Code 2024",
+        "Social housing complaints: Make Things Right",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 145
+    },
+    {
+      "id": "official-gb-003",
+      "category": "英国社会住房投诉",
+      "query": "How do I report a problem or complain about my social housing landlord in England?",
+      "expected_title": "How to report a problem or complain about a social housing landlord",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "How to report a problem or complain about a social housing landlord",
+        "Social housing complaints: Make Things Right",
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Complaint Handling Code 2024"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 115
+    },
+    {
+      "id": "official-gb-004",
+      "category": "英国社会住房投诉",
+      "query": "英国社会住房房东不处理问题时应如何投诉？",
+      "expected_title": "How to report a problem or complain about a social housing landlord",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 3,
+      "matched": true,
+      "cited_titles": [
+        "Social housing complaints: Make Things Right",
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "How to report a problem or complain about a social housing landlord",
+        "Complaint Handling Code 2024",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 129
+    },
+    {
+      "id": "official-gb-005",
+      "category": "英国监管分工",
+      "query": "Who handles individual complaints: the Regulator of Social Housing or the Housing Ombudsman?",
+      "expected_title": "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "How to report a problem or complain about a social housing landlord",
+        "Social housing complaints: Make Things Right",
+        "Complaint Handling Code 2024"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 117
+    },
+    {
+      "id": "official-gb-006",
+      "category": "英国投诉规范",
+      "query": "Does the Housing Ombudsman Complaint Handling Code require a two-stage complaint process?",
+      "expected_title": "Complaint Handling Code 2024",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Complaint Handling Code 2024",
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Social housing complaints: Make Things Right",
+        "How to report a problem or complain about a social housing landlord"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 174
+    },
+    {
+      "id": "official-gb-007",
+      "category": "英国潮湿霉菌",
+      "query": "英国住房申诉专员对潮湿和霉菌投诉提出了哪些后续建议？",
+      "expected_title": "Follow-up Spotlight report on damp and mould",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 3,
+      "matched": true,
+      "cited_titles": [
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector",
+        "Social housing complaints: Make Things Right",
+        "Follow-up Spotlight report on damp and mould",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Complaint Handling Code 2024"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 157
+    },
+    {
+      "id": "official-gb-008",
+      "category": "英国投诉活动",
+      "query": "What does the Make Things Right guidance tell social housing residents to do?",
+      "expected_title": "Social housing complaints: Make Things Right",
+      "expected_status": "answered",
+      "jurisdiction": "GB",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Social housing complaints: Make Things Right",
+        "How to report a problem or complain about a social housing landlord",
+        "Complaint Handling Code 2024",
+        "Regulator of Social Housing and Housing Ombudsman Service factsheet",
+        "Awaab's Law guidance: timeframes for repairs in the social rented sector"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 122
+    },
+    {
+      "id": "official-nsw-001",
+      "category": "NSW urgent repairs",
+      "query": "In NSW how can a tenant arrange urgent repairs and claim up to $1,000 back?",
+      "expected_title": "Getting repairs done on a rental property",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Getting repairs done on a rental property",
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Strata repairs and maintenance",
+        "Strata disputes",
+        "Complaints about a strata or building manager"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 84
+    },
+    {
+      "id": "official-nsw-002",
+      "category": "新州紧急维修",
+      "query": "新南威尔士租客联系不上房东时可以自行安排多少金额的紧急维修？",
+      "expected_title": "Getting repairs done on a rental property",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Getting repairs done on a rental property",
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Strata repairs and maintenance",
+        "Strata disputes",
+        "Complaints about a strata or building manager"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 80
+    },
+    {
+      "id": "official-nsw-003",
+      "category": "NSW landlord duties",
+      "query": "What are a NSW landlord's general repair maintenance and security obligations?",
+      "expected_title": "Landlord responsibilities for repair and maintenance of rental properties",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Strata repairs and maintenance",
+        "Getting repairs done on a rental property",
+        "Strata disputes",
+        "Complaints about a strata or building manager"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 77
+    },
+    {
+      "id": "official-nsw-004",
+      "category": "新州分层物业",
+      "query": "新南威尔士分层物业的公共部位由谁负责维修？",
+      "expected_title": "Strata repairs and maintenance",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Strata repairs and maintenance",
+        "Complaints about a strata or building manager",
+        "Strata disputes",
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Getting repairs done on a rental property"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 82
+    },
+    {
+      "id": "official-nsw-005",
+      "category": "NSW strata repairs",
+      "query": "Who repairs roofs gutters boundary walls and common-property plumbing in NSW strata?",
+      "expected_title": "Strata repairs and maintenance",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Strata repairs and maintenance",
+        "Strata disputes",
+        "Complaints about a strata or building manager",
+        "Getting repairs done on a rental property",
+        "Landlord responsibilities for repair and maintenance of rental properties"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 78
+    },
+    {
+      "id": "official-nsw-006",
+      "category": "NSW strata disputes",
+      "query": "How do I escalate a NSW strata dispute from discussion to mediation and tribunal?",
+      "expected_title": "Strata disputes",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Strata disputes",
+        "Getting repairs done on a rental property",
+        "Strata repairs and maintenance",
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Complaints about a strata or building manager"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 75
+    },
+    {
+      "id": "official-nsw-007",
+      "category": "新州物业投诉",
+      "query": "新南威尔士分层物业经理长期不回复邮件该如何投诉？",
+      "expected_title": "Complaints about a strata or building manager",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Complaints about a strata or building manager",
+        "Strata disputes",
+        "Strata repairs and maintenance",
+        "Landlord responsibilities for repair and maintenance of rental properties",
+        "Getting repairs done on a rental property"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 95
+    },
+    {
+      "id": "official-nsw-008",
+      "category": "NSW strata complaints",
+      "query": "Where can I complain about a strata manager's conduct in NSW?",
+      "expected_title": "Complaints about a strata or building manager",
+      "expected_status": "answered",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Complaints about a strata or building manager",
+        "Strata repairs and maintenance",
+        "Getting repairs done on a rental property",
+        "Strata disputes",
+        "Landlord responsibilities for repair and maintenance of rental properties"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 79
+    },
+    {
+      "id": "official-vic-001",
+      "category": "Victoria repairs",
+      "query": "How long does a Victorian rental provider have for non-urgent repairs?",
+      "expected_title": "Repairs in rental properties",
+      "expected_status": "answered",
+      "jurisdiction": "AU-VIC",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Repairs in rental properties",
+        "Renting disaster advice",
+        "Repairs in rental properties",
+        "Repairs in rental properties",
+        "Repairs in rental properties"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 67
+    },
+    {
+      "id": "official-vic-002",
+      "category": "维州紧急维修",
+      "query": "维多利亚州租客自行安排紧急维修的费用上限是多少？",
+      "expected_title": "Repairs in rental properties",
+      "expected_status": "answered",
+      "jurisdiction": "AU-VIC",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Repairs in rental properties",
+        "Renting disaster advice",
+        "Repairs in rental properties",
+        "Repairs in rental properties",
+        "Repairs in rental properties"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 70
+    },
+    {
+      "id": "official-vic-003",
+      "category": "Victoria urgent repairs",
+      "query": "What faults count as urgent repairs in a Victoria rental property?",
+      "expected_title": "Repairs in rental properties",
+      "expected_status": "answered",
+      "jurisdiction": "AU-VIC",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Repairs in rental properties",
+        "Renting disaster advice",
+        "Repairs in rental properties",
+        "Repairs in rental properties",
+        "Repairs in rental properties"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 79
+    },
+    {
+      "id": "official-vic-004",
+      "category": "Victoria disaster advice",
+      "query": "What should Victorian renters do when a flood or fire causes urgent damage?",
+      "expected_title": "Renting disaster advice",
+      "expected_status": "answered",
+      "jurisdiction": "AU-VIC",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Renting disaster advice",
+        "Repairs in rental properties",
+        "Renting disaster advice",
+        "Renting disaster advice",
+        "Renting disaster advice"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 70
+    },
+    {
+      "id": "official-nz-001",
+      "category": "NZ notice to remedy",
+      "query": "When can a New Zealand tenant issue a 14-day notice to remedy for repairs?",
+      "expected_title": "Damage and repairs",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Damage and repairs",
+        "What to do after a natural disaster",
+        "Landlord compliance checklist",
+        "Property maintenance",
+        "Landlord guide to the healthy homes standards"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 81
+    },
+    {
+      "id": "official-nz-002",
+      "category": "新西兰整改通知",
+      "query": "新西兰房东迟迟不维修时租客能否发14天整改通知？",
+      "expected_title": "Damage and repairs",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Damage and repairs",
+        "Property maintenance",
+        "What to do after a natural disaster",
+        "Landlord compliance checklist",
+        "Landlord guide to the healthy homes standards"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 100
+    },
+    {
+      "id": "official-nz-003",
+      "category": "NZ maintenance",
+      "query": "Who must keep a New Zealand rental property in a reasonable state of repair?",
+      "expected_title": "Property maintenance",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Property maintenance",
+        "Landlord guide to the healthy homes standards",
+        "Landlord compliance checklist",
+        "Damage and repairs",
+        "What to do after a natural disaster"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 85
+    },
+    {
+      "id": "official-nz-004",
+      "category": "新西兰物业维护",
+      "query": "新西兰出租房的水电结构和门锁由谁负责维护？",
+      "expected_title": "Property maintenance",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
+      "matched": true,
+      "cited_titles": [
+        "Damage and repairs",
+        "Property maintenance",
+        "Landlord compliance checklist",
+        "What to do after a natural disaster",
+        "Landlord guide to the healthy homes standards"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 91
+    },
+    {
+      "id": "official-nz-005",
+      "category": "NZ disaster repairs",
+      "query": "What happens to rent when a New Zealand rental is partly damaged but still habitable after a disaster?",
+      "expected_title": "What to do after a natural disaster",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "What to do after a natural disaster",
+        "Property maintenance",
+        "Damage and repairs",
+        "Landlord compliance checklist",
+        "Landlord guide to the healthy homes standards"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 91
+    },
+    {
+      "id": "official-nz-006",
+      "category": "新西兰灾后租赁",
+      "query": "新西兰灾后房屋部分损坏但仍可居住时是否应降低租金？",
+      "expected_title": "What to do after a natural disaster",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
+      "matched": true,
+      "cited_titles": [
+        "Damage and repairs",
+        "What to do after a natural disaster",
+        "Landlord compliance checklist",
+        "Property maintenance",
+        "Landlord guide to the healthy homes standards"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 93
+    },
+    {
+      "id": "official-nz-007",
+      "category": "NZ healthy homes",
+      "query": "What maintenance does the New Zealand healthy homes landlord guide require?",
+      "expected_title": "Landlord guide to the healthy homes standards",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Landlord guide to the healthy homes standards",
+        "What to do after a natural disaster",
+        "Property maintenance",
+        "Damage and repairs",
+        "Landlord compliance checklist"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 82
+    },
+    {
+      "id": "official-nz-008",
+      "category": "NZ compliance",
+      "query": "Which official New Zealand checklist covers landlord repair and healthy homes compliance?",
+      "expected_title": "Landlord compliance checklist",
+      "expected_status": "answered",
+      "jurisdiction": "NZ",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 2,
+      "matched": true,
+      "cited_titles": [
+        "Landlord guide to the healthy homes standards",
+        "Landlord compliance checklist",
+        "What to do after a natural disaster",
+        "Damage and repairs",
+        "Property maintenance"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 86
+    },
+    {
+      "id": "official-global-001",
+      "category": "Open311",
+      "query": "Which Open311 GeoReport endpoint creates a service request?",
+      "expected_title": "Open311 GeoReport v2",
+      "expected_status": "answered",
+      "jurisdiction": "GLOBAL",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 64
+    },
+    {
+      "id": "official-global-002",
+      "category": "Open311 中文",
+      "query": "Open311 市政服务请求接口怎样创建工单？",
+      "expected_title": "Open311 GeoReport v2",
+      "expected_status": "answered",
+      "jurisdiction": "GLOBAL",
+      "actual_status": "answered",
+      "expected_positive": true,
+      "actual_positive": true,
+      "rank": 1,
+      "matched": true,
+      "cited_titles": [
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2",
+        "Open311 GeoReport v2"
+      ],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 67
+    },
+    {
+      "id": "official-neg-001",
+      "category": "辖区隔离",
+      "query": "What is the exact Shanghai property fee under NSW rules?",
+      "expected_title": null,
+      "expected_status": "refused",
+      "jurisdiction": "AU-NSW",
+      "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
+      "matched": null,
+      "cited_titles": [],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 0
+    },
+    {
+      "id": "official-neg-002",
+      "category": "辖区隔离",
+      "query": "What temperature must NYC apartments maintain under New Zealand tenancy guidance?",
+      "expected_title": null,
+      "expected_status": "refused",
+      "jurisdiction": "NZ",
+      "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
+      "matched": null,
+      "cited_titles": [],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 0
+    },
+    {
+      "id": "official-neg-003",
+      "category": "辖区隔离",
+      "query": "维多利亚州2500澳元紧急维修上限是否适用于北京？",
+      "expected_title": null,
+      "expected_status": "refused",
+      "jurisdiction": "北京市",
+      "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
+      "matched": null,
+      "cited_titles": [],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
+      "latency_ms": 0
+    },
+    {
+      "id": "official-neg-004",
+      "category": "辖区隔离",
+      "query": "Does Singapore HDB renovation permit law apply to England social housing complaints?",
+      "expected_title": null,
+      "expected_status": "refused",
+      "jurisdiction": "GB",
+      "actual_status": "refused",
+      "expected_positive": false,
+      "actual_positive": false,
+      "rank": null,
+      "matched": null,
+      "cited_titles": [],
+      "citation_complete": true,
+      "jurisdiction_leakage": false,
       "latency_ms": 0
     }
   ]

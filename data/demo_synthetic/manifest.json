@@ -1,0 +1,43 @@
+{
+  "dataset": "beijing_property_ops_6000",
+  "data_class": "DEMO_SYNTHETIC",
+  "synthetic": true,
+  "seed": 20260810,
+  "generated_at": "2026-08-10T12:56:04.253068+00:00",
+  "real_property_authorization": false,
+  "contains_real_personal_data": false,
+  "contains_real_company_facts": false,
+  "allowed_use": [
+    "产品演示",
+    "回归测试",
+    "流程分析"
+  ],
+  "prohibited_claims": [
+    "真实居民数据",
+    "真实账单",
+    "真实工单",
+    "真实物业公司经营事实"
+  ],
+  "file": "data/demo_synthetic/beijing_property_ops_6000.jsonl",
+  "sha256": "34b67a19c4bec6d073374a05b52d4b0e37c1b154531a1a31fa82264e9fb872aa",
+  "validation": {
+    "status": "PASS",
+    "errors": [],
+    "record_count": 6000,
+    "type_counts": {
+      "work_order": 1800,
+      "inspection_task": 900,
+      "bill": 900,
+      "rectification": 300,
+      "complaint": 700,
+      "sla_event": 350,
+      "equipment_asset": 400,
+      "announcement": 150,
+      "inspection_anomaly": 300,
+      "bill_review": 200
+    },
+    "coverage_start": "2025-02-01T00:04:50+08:00",
+    "coverage_end": "2026-08-01T23:36:52+08:00",
+    "coverage_days": 546
+  }
+}

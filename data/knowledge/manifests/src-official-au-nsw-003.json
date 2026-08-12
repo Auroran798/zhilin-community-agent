@@ -1,0 +1,10 @@
+{
+  "source_no": "SRC-OFFICIAL-AU-NSW-003",
+  "source_url": "https://www.nsw.gov.au/housing-and-construction/strata/living/repairs-and-maintenance",
+  "local_path": "official/international/au_nsw_strata_repairs_maintenance.html",
+  "acquired_at": "2026-08-10T04:45:38.953311+00:00",
+  "byte_size": 174327,
+  "sha256": "2c5f7b6ca9d2a9fa6043cacadc7a1ac9529e2749d72168798e9184abd91a7e20",
+  "content_type": "text/html",
+  "download_policy": "https_exact_host_allowlist_v2"
+}

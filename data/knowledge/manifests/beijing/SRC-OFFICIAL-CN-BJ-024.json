@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-BJ-024",
+  "requested_url": "https://csglw.beijing.gov.cn/zwxx/2024zcwj/202405/t20240517_3687045.html",
+  "retrieved_at": "2026-08-10T12:53:35.860479+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://csglw.beijing.gov.cn/zwxx/2024zcwj/202405/t20240517_3687045.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "csglw.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://csglw.beijing.gov.cn/zwxx/2024zcwj/202405/t20240517_3687045.html",
+  "final_host": "csglw.beijing.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 67012,
+  "sha256": "8b646e2380d09cccf6172e4baf3063f0af598b28d41bcf1aa5978a6e03ba624e",
+  "local_path": "official/china/beijing/src-official-cn-bj-024.html"
+}

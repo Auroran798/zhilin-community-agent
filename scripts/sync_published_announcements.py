@@ -2,7 +2,6 @@
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from datetime import datetime
 from api.database import SessionLocal
 from api.models import Announcement, User
 from rag.service import sync_published_announcement

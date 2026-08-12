@@ -39,6 +39,16 @@ else:
     role = user["role"]
     st.sidebar.title("智邻管家")
     st.sidebar.caption(f"{user['display_name']}（{role}）")
+    mode_labels={"domestic_beijing":"北京物业助手","international_research":"国际研究模式","demo_garden":"Demo Garden 演示"}
+    product_mode=st.sidebar.selectbox("当前模式",list(mode_labels),format_func=lambda value:mode_labels[value],key="product_mode")
+    if product_mode=="international_research":
+        jurisdiction=st.sidebar.selectbox("研究辖区",["GB","AU-NSW","AU-VIC","NZ","US-NY-NYC","SG","GLOBAL"],key="research_jurisdiction")
+        st.sidebar.warning("外国制度仅作比较和流程借鉴，不是北京物业处理依据。")
+    else:
+        domestic_values=["","北京市","全国","Demo Garden"]
+        jurisdiction=st.sidebar.selectbox("适用辖区",domestic_values,index=1,format_func=lambda value:{"":"自动识别","北京市":"北京（全国+北京+当前小区）","全国":"仅全国","Demo Garden":"当前演示小区"}[value],key="domestic_jurisdiction")
+        st.sidebar.info("默认业务辖区：北京。涉及未指明城市的地方规则时会要求补充城市。")
+    st.sidebar.code(product_mode,language=None)
     if st.sidebar.button("退出登录"):
         st.session_state.clear(); st.rerun()
     menu = {
@@ -52,7 +62,7 @@ else:
 
     if page == "智能体对话":
         st.title("智邻管家智能体")
-        st.caption("可协助报修、工单/账单查询、费用核查、制度问答和公告草稿。写入业务前会展示预览，须由您明确确认。安全事件会立即转人工。")
+        st.caption(f"当前模式：{product_mode}。可协助报修、工单/账单查询、费用核查、制度问答和公告草稿；业务记录均为 DEMO_SYNTHETIC。写入前须明确确认，公告不能由智能体自动发布。")
         if "agent_session" not in st.session_state:
             created=call("POST","/api/v1/agent/sessions")
             if created: st.session_state.agent_session=created["id"]
@@ -61,7 +71,7 @@ else:
                 with st.chat_message("assistant" if message["role"]=="assistant" else "user"): st.write(message["content"])
             question=st.chat_input("例如：1号楼楼道灯不亮，请帮我报修")
             if question:
-                result=call("POST",f"/api/v1/agent/sessions/{st.session_state.agent_session}/messages",json={"content":question})
+                result=call("POST",f"/api/v1/agent/sessions/{st.session_state.agent_session}/messages",json={"content":question,"product_mode":product_mode,"jurisdiction":jurisdiction or None})
                 if result:
                     st.session_state.agent_pending=result if result.get("confirmation_id") else None
                     st.rerun()
@@ -83,16 +93,17 @@ else:
                     call("POST",f"/api/v1/agent/confirmations/{pending['confirmation_id']}/cancel");st.session_state.agent_pending=None;st.rerun()
     elif page == "智能问答":
         st.title("物业知识问答")
-        st.caption("回答仅依据当前有效知识库，并展示来源；无法依据资料确认时会明确拒答。")
+        st.caption(f"当前模式：{product_mode}。回答仅依据当前有效、已审核知识库，并展示层级、地域、版本、生效时间和官方原文；依据不足时拒答。")
         with st.form("rag_query"):
             question=st.text_area("请输入物业问题", placeholder="例如：装修前需要办理哪些手续？")
             doc_type=st.text_input("资料类型筛选（可选）", placeholder="如 renovation_rule")
             submitted=st.form_submit_button("查询")
         if submitted and question.strip():
-            payload={"query":question,"top_k":"5"}
+            payload={"query":question,"top_k":"5","product_mode":product_mode,"jurisdiction":jurisdiction}
             if doc_type.strip(): payload["document_type"]=doc_type.strip()
             answer=call("POST","/api/v1/knowledge/query",data=payload)
             if answer:
+                st.code(f"mode={answer.get('product_mode')} | jurisdiction={answer.get('jurisdiction')}",language=None)
                 if answer["answer_status"]=="answered": st.success(answer["answer"])
                 else: st.warning(answer["answer"])
                 if answer.get("scope_warning"): st.info(answer["scope_warning"])

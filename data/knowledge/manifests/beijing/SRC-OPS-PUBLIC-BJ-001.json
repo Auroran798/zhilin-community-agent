@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OPS-PUBLIC-BJ-001",
+  "requested_url": "https://www.beijing.gov.cn/hudong/jpzt/2022ndsjbg/index.html",
+  "retrieved_at": "2026-08-10T12:53:50.213715+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://www.beijing.gov.cn/hudong/jpzt/2022ndsjbg/index.html",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "www.beijing.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://www.beijing.gov.cn/hudong/jpzt/2022ndsjbg/index.html",
+  "final_host": "www.beijing.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 53736,
+  "sha256": "01cf4d05a1eee3c2e34453b7591ade46e997d36285cb010c9f31a54dae2f8976",
+  "local_path": "official/china/beijing/src-ops-public-bj-001.html"
+}

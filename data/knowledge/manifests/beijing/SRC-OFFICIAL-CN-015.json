@@ -1,0 +1,23 @@
+{
+  "manifest_version": "beijing-source-download-v1",
+  "source_no": "SRC-OFFICIAL-CN-015",
+  "requested_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081817dea9c18017deb70ddc70131&type=",
+  "retrieved_at": "2026-08-10T12:53:17.114596+00:00",
+  "redirect_chain": [
+    {
+      "url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081817dea9c18017deb70ddc70131&type=",
+      "status_code": 200
+    }
+  ],
+  "allowed_host": "flk.npc.gov.cn",
+  "status": "downloaded",
+  "final_url": "https://flk.npc.gov.cn/detail?fileId=&id=ff8081817dea9c18017deb70ddc70131&type=",
+  "final_host": "flk.npc.gov.cn",
+  "content_type": "text/html",
+  "mime_valid": true,
+  "signature": "html",
+  "signature_valid": true,
+  "size_bytes": 455,
+  "sha256": "4b576b492ac486fddeb0a4c775e3e008ec5af1ff22f79a483e9ab617e31b04b1",
+  "local_path": "official/china/national/src-official-cn-015.html"
+}

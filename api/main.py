@@ -1,18 +1,17 @@
 import uuid
 import re
-from datetime import datetime
 from fastapi import FastAPI, Depends, Header, HTTPException, UploadFile, File, Form, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from .database import get_db
-from .models import User, Binding, Property, WorkOrder, WorkOrderEvent, WorkOrderRating, Announcement, Bill, PaymentRecord, BillReviewRequest, InspectionTask, InspectionRecord, RectificationOrder, AuditLog, KnowledgeDocument, KnowledgeChunk, KnowledgeIngestionJob, RagFeedback, RagQueryLog, AnnouncementApproval, Notification, InspectionPlan, Equipment, MaintenanceProfile
+from .models import User, Binding, Property, WorkOrder, WorkOrderEvent, WorkOrderRating, Announcement, Bill, PaymentRecord, BillReviewRequest, InspectionTask, InspectionRecord, RectificationOrder, AuditLog, KnowledgeDocument, KnowledgeSource, KnowledgeChunk, KnowledgeIngestionJob, RagFeedback, RagQueryLog, Notification, InspectionPlan, Equipment
 from .schemas import LoginIn, WorkOrderIn, AssignIn, TransitionIn, RatingIn, AnnouncementIn, ReviewIn, HandleReviewIn, InspectionTaskIn, InspectionRecordIn, RectificationIn, ApprovalIn, InspectionPlanIn, EquipmentIn
 from agent.schemas import AgentMessageIn, ConfirmationIn, ConfirmationModifyIn, MemoryIn, ResumeIn, ReviewAssignIn, ReviewResolveIn
 from agent.service import AgentService
 from .security import verify_password, create_token, current_user, require_roles
 from .services import WorkOrderService, DashboardService, audit, number, bound_property
 from .config import settings
-from rag.service import ALLOWED, VectorStore, create_job, digest, ingest, search, validate_upload
+from rag.service import ALLOWED, VectorStore, create_job, digest, ingest, quality_profile, search, validate_upload
 from pathlib import Path
 from .observability import router as observability_router, mcp_router as mcp_observability_router
 from .integrations import router as property_system_integration_router
@@ -59,6 +58,16 @@ async def reject_malformed_http_target(request: Request, call_next):
     return await call_next(request)
 def row(x): return {c.name:getattr(x,c.name) for c in x.__table__.columns}
 def ok(data,message="操作成功"): return {"success":True,"data":data,"message":message,"request_id":str(uuid.uuid4())}
+
+def _require_governed_official_source(db:Session,doc:KnowledgeDocument)->KnowledgeSource:
+    source=db.get(KnowledgeSource,doc.source_id) if doc.source_id else None
+    if not source: raise HTTPException(400,"Official documents must originate from the governed source registry")
+    if not (source.actually_downloaded and source.manually_verified and source.answerable and source.review_status=="approved"):
+        raise HTTPException(400,"Official source is pending or failed download/review governance")
+    if source.file_hash!=doc.file_hash or source.source_url!=doc.source_url:
+        raise HTTPException(400,"Official document no longer matches its governed source checksum or URL")
+    return source
+
 @app.exception_handler(HTTPException)
 async def http_error(request,exc): return JSONResponse(status_code=exc.status_code,content={"success":False,"error":{"code":"PERMISSION_DENIED" if exc.status_code==403 else "BUSINESS_ERROR","message":str(exc.detail),"details":{}},"request_id":str(uuid.uuid4())})
 @app.get("/health")
@@ -68,7 +77,8 @@ def ready(db:Session=Depends(get_db)):
  db.execute(__import__("sqlalchemy").text("SELECT 1"))
  store=VectorStore()
  if not store.ready: raise HTTPException(503,"Chroma vector store is unavailable")
- return {"status":"ready","database":"ok","vector_store":"ok","embedding_model":store.embedding.model_name}
+ profile=quality_profile()
+ return {"status":"ready","database":"ok","vector_store":"ok","embedding_model":store.embedding.model_name,"rag_quality":profile}
 
 def agent_row(x): return {c.name:getattr(x,c.name) for c in x.__table__.columns}
 @app.post("/api/v1/agent/sessions")
@@ -83,7 +93,7 @@ def get_agent_messages(session_id:str,user:User=Depends(current_user),db:Session
  return ok([agent_row(x) for x in AgentService().messages(db,user,session_id)])
 @app.post("/api/v1/agent/sessions/{session_id}/messages")
 def send_agent_message(session_id:str,data:AgentMessageIn,user:User=Depends(current_user),db:Session=Depends(get_db)):
- return ok(AgentService().turn(db,user,session_id,data.content))
+ return ok(AgentService().turn(db,user,session_id,data.content,data.product_mode,data.jurisdiction))
 @app.post("/api/v1/agent/confirmations/{confirmation_id}")
 def confirm_agent_action(confirmation_id:str,data:ConfirmationIn,user:User=Depends(current_user),db:Session=Depends(get_db)):
  return ok(AgentService().confirm(db,user,confirmation_id) if data.decision=="confirm" else AgentService().cancel_confirmation(db,user,confirmation_id))
@@ -403,7 +413,7 @@ def equipment_history(equipment_id:str,user:User=Depends(require_roles("customer
 def logs(user:User=Depends(require_roles("manager")),db:Session=Depends(get_db)): return ok([row(x) for x in db.query(AuditLog).order_by(AuditLog.created_at.desc()).limit(200)])
 
 @app.post("/api/v1/knowledge/documents")
-async def upload_knowledge_document(file:UploadFile=File(...), title:str=Form(...), document_type:str=Form("community_rule"), source_type:str=Form("synthetic_community_document"), applicable_community:str|None=Form(None), version:str=Form("1.0"), source_url:str|None=Form(None), publisher:str|None=Form(None), jurisdiction:str|None=Form(None), authority_status:str|None=Form(None), user:User=Depends(require_roles("manager")), db:Session=Depends(get_db)):
+async def upload_knowledge_document(file:UploadFile=File(...), title:str=Form(...), document_type:str=Form("community_rule"), source_type:str=Form("synthetic_community_document"), applicable_community:str|None=Form(None), version:str=Form("1.0"), source_url:str|None=Form(None), publisher:str|None=Form(None), country:str|None=Form(None), jurisdiction:str|None=Form(None), language:str=Form("zh-CN"), answerable:bool=Form(True), authority_level:str=Form("community"), authority_status:str|None=Form(None), license_note:str|None=Form(None), license_url:str|None=Form(None), contains_personal_data:bool=Form(False), minimization_rule:str|None=Form(None), user:User=Depends(require_roles("manager")), db:Session=Depends(get_db)):
     suffix=Path(file.filename or "").suffix.lower()
     if suffix not in ALLOWED: raise HTTPException(400,"Unsupported knowledge file type")
     payload=await file.read()
@@ -413,9 +423,15 @@ async def upload_knowledge_document(file:UploadFile=File(...), title:str=Form(..
     file_hash=digest(payload)
     if old:=db.query(KnowledgeDocument).filter_by(file_hash=file_hash).first(): return ok(row(old),"Duplicate file reused")
     if source_type not in {"official_public_document","synthetic_community_document","stage1_published_announcement"}: raise HTTPException(400,"Invalid knowledge source type")
-    if source_type=="official_public_document" and (not source_url or not publisher): raise HTTPException(400,"Official documents require source_url and publisher")
+    if source_type=="official_public_document":
+        missing=[name for name,value in (("source_url",source_url),("publisher",publisher),("country",country),("jurisdiction",jurisdiction),("language",language),("authority_level",authority_level),("license_note",license_note),("license_url",license_url)) if not value]
+        if missing: raise HTTPException(400,"Official documents require governed metadata: "+", ".join(missing))
+        if not source_url.startswith("https://") or not license_url.startswith("https://"): raise HTTPException(400,"Official source and license URLs must use HTTPS")
+        if contains_personal_data and not minimization_rule: raise HTTPException(400,"Sources containing personal data require a minimization rule")
     root=Path(settings.rag_storage_path); root.mkdir(parents=True,exist_ok=True); stored=root/f"{file_hash}{suffix}"; stored.write_bytes(payload)
-    doc=KnowledgeDocument(document_no=number("KD",db,KnowledgeDocument),title=title,document_type=document_type,source_type=source_type,source_url=source_url,publisher=publisher,jurisdiction=jurisdiction,authority_status=authority_status,applicable_community=applicable_community,version=version,file_name=Path(file.filename or "upload").name,file_type=suffix.lstrip("."),file_size=len(payload),file_hash=file_hash,storage_path=str(stored),created_by=user.id,is_authoritative=source_type=="official_public_document",is_synthetic=source_type=="synthetic_community_document",status="uploaded")
+    data_class="KB_POLICY" if source_type=="official_public_document" else "DEMO_SYNTHETIC"
+    governed_jurisdiction=jurisdiction or (applicable_community if source_type=="synthetic_community_document" else None)
+    doc=KnowledgeDocument(document_no=number("KD",db,KnowledgeDocument),title=title,document_type=document_type,source_type=source_type,data_class=data_class,source_url=source_url,publisher=publisher,country=country,jurisdiction=governed_jurisdiction,language=language,answerable=answerable,authority_level=authority_level,authority_status=authority_status,license_note=license_note,license_url=license_url,contains_personal_data=contains_personal_data,minimization_rule=minimization_rule,review_status="approved" if source_type=="synthetic_community_document" else "pending",applicable_community=applicable_community,version=version,file_name=Path(file.filename or "upload").name,file_type=suffix.lstrip("."),file_size=len(payload),file_hash=file_hash,storage_path=str(stored),created_by=user.id,is_authoritative=source_type=="official_public_document",is_synthetic=source_type=="synthetic_community_document",status="uploaded")
     db.add(doc); audit(db,user,"upload_knowledge_document","knowledge_document",doc.id); db.commit(); db.refresh(doc); return ok(row(doc))
 
 @app.post("/api/v1/knowledge/documents/{document_id}/index")
@@ -470,13 +486,16 @@ def activate_knowledge_document(document_id:str,user:User=Depends(require_roles(
     doc=db.get(KnowledgeDocument,document_id)
     if not doc: raise HTTPException(404,"Knowledge document not found")
     if doc.status!="indexed": raise HTTPException(400,"Document must be indexed before activation")
+    if doc.source_type=="official_public_document":
+        _require_governed_official_source(db,doc)
+        if doc.review_status!="approved": raise HTTPException(400,"Official document must pass review before activation")
     doc.status="active"; db.commit(); return ok(row(doc))
 
 @app.post("/api/v1/knowledge/documents/{document_id}/deactivate")
 def deactivate_knowledge_document(document_id:str,user:User=Depends(require_roles("manager")),db:Session=Depends(get_db)):
     doc=db.get(KnowledgeDocument,document_id)
     if not doc: raise HTTPException(404,"Knowledge document not found")
-    doc.status="inactive"; audit(db,user,"deactivate_knowledge_document","knowledge_document",doc.id); db.commit(); return ok(row(doc))
+    doc.status="inactive";doc.review_status="suspended"; audit(db,user,"deactivate_knowledge_document","knowledge_document",doc.id); db.commit(); return ok(row(doc))
 
 @app.get("/api/v1/knowledge/documents")
 def list_knowledge_documents(user:User=Depends(require_roles("manager")),db:Session=Depends(get_db)): return ok([row(x) for x in db.query(KnowledgeDocument).order_by(KnowledgeDocument.created_at.desc())])
@@ -490,7 +509,7 @@ def submit_knowledge_review(document_id:str,user:User=Depends(require_roles("man
  doc=db.get(KnowledgeDocument,document_id)
  if not doc: raise HTTPException(404,"Knowledge document not found")
  if doc.status not in {"uploaded","indexed","failed"}: raise HTTPException(400,"Document cannot be submitted in its current state")
- doc.status="review_pending";audit(db,user,"submit_knowledge_review","knowledge_document",doc.id);db.commit();return ok(row(doc))
+ doc.status="review_pending";doc.review_status="pending";audit(db,user,"submit_knowledge_review","knowledge_document",doc.id);db.commit();return ok(row(doc))
 
 @app.post("/api/v1/knowledge/documents/{document_id}/approve")
 def approve_knowledge_document(document_id:str,user:User=Depends(require_roles("manager")),db:Session=Depends(get_db)):
@@ -498,16 +517,31 @@ def approve_knowledge_document(document_id:str,user:User=Depends(require_roles("
  if not doc: raise HTTPException(404,"Knowledge document not found")
  if doc.status not in {"review_pending","indexed"}: raise HTTPException(400,"Document must be indexed or pending review")
  if not db.query(KnowledgeChunk).filter_by(document_id=doc.id).count(): raise HTTPException(400,"Document must be indexed before approval")
- doc.status="active";audit(db,user,"approve_knowledge_document","knowledge_document",doc.id);db.commit();return ok(row(doc))
+ if doc.source_type=="official_public_document": _require_governed_official_source(db,doc)
+ doc.status="active";doc.review_status="approved";doc.reviewed_by=user.id;audit(db,user,"approve_knowledge_document","knowledge_document",doc.id);db.commit();return ok(row(doc))
 
 @app.post("/api/v1/knowledge/query")
-def knowledge_query(query:str=Form(...), top_k:int=Form(5), document_type:str|None=Form(None), include_history:bool=Form(False), user:User=Depends(current_user), db:Session=Depends(get_db)):
+def knowledge_query(query:str=Form(...), top_k:int=Form(5), document_type:str|None=Form(None), jurisdiction:str|None=Form(None), product_mode:str=Form("domestic_beijing"), include_history:bool=Form(False), user:User=Depends(current_user), db:Session=Depends(get_db)):
     community=None
     if user.role=="resident":
         binding=db.query(Binding).filter_by(user_id=user.id,is_primary=True).first()
         if binding: community=db.get(Property,binding.property_id).community_name
     if include_history and user.role not in {"manager","customer_service"}: raise HTTPException(403,"Only staff may retrieve historical documents")
-    return ok(search(db,query,user,community,min(max(top_k,1),10),include_history,document_type))
+    return ok(search(db,query,user,community,min(max(top_k,1),10),include_history,document_type,jurisdiction,product_mode))
+
+@app.get("/api/v1/product-context")
+def product_context(user:User=Depends(current_user)):
+    return ok({
+        "default_mode":settings.product_mode,
+        "supported_modes":["domestic_beijing","international_research","demo_garden"],
+        "default_jurisdiction":settings.default_domestic_jurisdiction,
+        "data_layers":{
+            "KB_POLICY":"全国与北京官方法规、标准、指南，可用于有证据回答",
+            "OPS_PUBLIC":"官方聚合公开数据，仅用于类别与趋势分析",
+            "DEMO_SYNTHETIC":"合成业务数据，不代表真实居民、账单、小区或物业企业",
+        },
+        "real_property_authorization":False,
+    })
 
 @app.post("/api/v1/knowledge/feedback")
 def knowledge_feedback(query_log_id:str=Form(...), rating:int=Form(...), comment:str|None=Form(None), user:User=Depends(current_user),db:Session=Depends(get_db)):
