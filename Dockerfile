@@ -23,7 +23,12 @@ RUN set -eux; \
         tdnf install -y gcc-c++ make; \
     fi; \
     python3 -m venv /opt/venv; \
-    /opt/venv/bin/python -m pip install --prefer-binary --retries ${PIP_RETRIES} --timeout ${PIP_TIMEOUT} --index-url ${PIP_INDEX_URL} -r /tmp/docker-runtime.txt
+    /opt/venv/bin/python -m pip install --prefer-binary --retries ${PIP_RETRIES} --timeout ${PIP_TIMEOUT} --index-url ${PIP_INDEX_URL} -r /tmp/docker-runtime.txt; \
+    if command -v apt-get >/dev/null 2>&1; then \
+        rm -rf /var/lib/apt/lists/*; \
+    elif command -v tdnf >/dev/null 2>&1; then \
+        tdnf clean all; \
+    fi
 
 COPY . .
 RUN /opt/venv/bin/python -m pip install --no-deps --no-build-isolation .
@@ -35,10 +40,10 @@ RUN if ! command -v groupadd >/dev/null 2>&1; then tdnf install -y shadow-utils 
     && groupadd --system zhilin \
     && useradd --system --gid zhilin --home-dir /app --shell "$(command -v nologin || echo /bin/false)" zhilin
 
-# Refresh security-fixable base packages after dependency installation. The
-# conditional keeps the primary Debian and Azure Linux fallback builds aligned.
+# Apply the current security updates in the final stage. This includes the
+# patched Python runtime and libarchive packages tracked by the release gate.
 RUN if command -v tdnf >/dev/null 2>&1; then \
-        tdnf upgrade -y libarchive && tdnf clean all; \
+        tdnf upgrade -y && tdnf clean all; \
     elif command -v apt-get >/dev/null 2>&1; then \
         apt-get update; \
         for package in libarchive13t64 libarchive13; do \
