@@ -5,7 +5,7 @@ param(
     [string]$ProjectName = "zhilin-stage4-ascii",
     [int]$ApiPort = 18019,
     [int]$WebPort = 18519,
-    [string]$PythonBaseImage = "python:3.12-slim"
+    [string]$PythonBaseImage = "mcr.microsoft.com/azurelinux/base/python:3.12"
 )
 
 # Docker Desktop BuildKit can reject a Compose build when the checkout path

@@ -14,7 +14,7 @@
 ## Docker 与 Compose 验收
 
 - Docker Hub `python:3.12-slim` 已成功拉取，digest 为 `sha256:507285ff17cb1d1756d3711c7543e82188f7a3752c79a9b3a4f9320640390300`。
-- 标准 Dockerfile 默认使用 `python:3.12-slim`；受限网络可用 `PYTHON_BASE_IMAGE=mcr.microsoft.com/azurelinux/base/python:3.12` 覆盖。
+- 标准 Dockerfile 默认使用已通过镜像漏洞门禁的 `mcr.microsoft.com/azurelinux/base/python:3.12`；仍可用 `PYTHON_BASE_IMAGE` 覆盖。
 - 由于原工作目录含中文字符，Docker Desktop BuildKit 在直接 Compose 构建时会产生非 ASCII gRPC header。项目新增 `scripts/compose_ascii_worktree.ps1`：它只复制到脚本管理的 `C:\DockerBuild\zhilin-community-agent` ASCII 工作副本，不移动或覆盖原项目。
 - 在该 ASCII 工作副本中，以下 Compose 构建均返回退出码 0：
 

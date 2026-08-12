@@ -63,4 +63,4 @@ npx --yes @modelcontextprotocol/inspector --cli python -m mcp_server.server -- `
 
 ## 6. Docker 运行边界
 
-`Dockerfile` 与 Compose 支持 `PYTHON_BASE_IMAGE` 覆盖，默认使用 Docker Hub 的 `python:3.12-slim`；受限网络可传入 MCR 基础镜像。对于 Windows 的非 ASCII 工作路径，使用 `scripts/compose_ascii_worktree.ps1` 创建脚本管理的 ASCII 构建副本后执行 Compose。镜像构建后必须执行 Alembic、种子数据、`/health`、`/ready` 和 MCP 管理 API 验收。
+`Dockerfile` 与 Compose 支持 `PYTHON_BASE_IMAGE` 覆盖，默认使用已通过镜像漏洞门禁的 `mcr.microsoft.com/azurelinux/base/python:3.12`。对于 Windows 的非 ASCII 工作路径，使用 `scripts/compose_ascii_worktree.ps1` 创建脚本管理的 ASCII 构建副本后执行 Compose。镜像构建后必须执行 Alembic、种子数据、`/health`、`/ready` 和 MCP 管理 API 验收。
