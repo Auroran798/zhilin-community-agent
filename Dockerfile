@@ -14,10 +14,26 @@ RUN if ! command -v groupadd >/dev/null 2>&1; then tdnf install -y shadow-utils 
     && groupadd --system zhilin \
     && useradd --system --gid zhilin --home-dir /app --shell "$(command -v nologin || echo /bin/false)" zhilin
 
-# Keep third-party packages in their own layer: code-only changes reuse it and
-# --prefer-binary avoids unexpectedly compiling packages inside the slim image.
+# Keep third-party packages in their own layer: code-only changes reuse it.
+# chroma-hnswlib does not publish a Python 3.13 wheel, so slim images need a
+# temporary C++ toolchain. Remove it after pip finishes to keep compilers out
+# of the runtime image.
 COPY requirements/docker-runtime.txt /tmp/docker-runtime.txt
-RUN python3 -m pip install --prefer-binary --retries ${PIP_RETRIES} --timeout ${PIP_TIMEOUT} --index-url ${PIP_INDEX_URL} -r /tmp/docker-runtime.txt
+RUN set -eux; \
+    if command -v apt-get >/dev/null 2>&1; then \
+        apt-get update; \
+        apt-get install -y --no-install-recommends build-essential; \
+    elif command -v tdnf >/dev/null 2>&1; then \
+        tdnf install -y gcc-c++ make; \
+    fi; \
+    python3 -m pip install --prefer-binary --retries ${PIP_RETRIES} --timeout ${PIP_TIMEOUT} --index-url ${PIP_INDEX_URL} -r /tmp/docker-runtime.txt; \
+    if command -v apt-get >/dev/null 2>&1; then \
+        apt-get purge -y --auto-remove build-essential; \
+        rm -rf /var/lib/apt/lists/*; \
+    elif command -v tdnf >/dev/null 2>&1; then \
+        tdnf remove -y gcc-c++ make; \
+        tdnf clean all; \
+    fi
 
 # Refresh security-fixable base packages after dependency installation. The
 # conditional keeps the primary Debian and Azure Linux fallback builds aligned.
