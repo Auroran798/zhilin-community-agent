@@ -1,11 +1,11 @@
 services:
   - type: web
-    name: zhilin-agent-api
+    name: zhilin-agent-demo
     runtime: python
     plan: free
     buildCommand: pip install -e .
     preDeployCommand: alembic upgrade head && python -m data.seed && python scripts/import_knowledge.py --reindex-all
-    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    startCommand: sh -c 'uvicorn api.main:app --host 127.0.0.1 --port 8000 & exec streamlit run web/app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true'
     envVars:
       - key: PYTHON_VERSION
         value: 3.13.14
@@ -27,17 +27,3 @@ services:
         generateValue: true
       - key: DEMO_PASSWORD
         value: DemoPass123!
-  - type: web
-    name: zhilin-agent-demo
-    runtime: python
-    plan: free
-    buildCommand: pip install -e .
-    startCommand: streamlit run web/app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.13.14
-      - key: API_HOSTPORT
-        fromService:
-          type: web
-          name: zhilin-agent-api
-          property: hostport
