@@ -4,8 +4,7 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -e .
-    preDeployCommand: alembic upgrade head && python -m data.seed && python scripts/import_knowledge.py --reindex-all
-    startCommand: sh -c 'uvicorn api.main:app --host 127.0.0.1 --port 8000 & exec streamlit run web/app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true'
+    startCommand: sh -c 'alembic upgrade head && python -m data.seed && python scripts/import_knowledge.py --reindex-all && (uvicorn api.main:app --host 127.0.0.1 --port 8000 & exec streamlit run web/app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true)'
     envVars:
       - key: PYTHON_VERSION
         value: 3.13.14
